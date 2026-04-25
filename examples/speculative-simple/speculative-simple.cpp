@@ -442,6 +442,14 @@ int main(int argc, char ** argv) {
                     use_rejection_sampling ? &draft_log_probs : nullptr);
             }
 
+            // [DBG-SD] match server logging for cross-binary diff
+            {
+                std::string draft_str;
+                for (size_t i = 0; i < draft.size() && i < 24; i++) draft_str += std::to_string((int)draft[i]) + " ";
+                fprintf(stderr, "[DBG-DRAFT] iter_npast=%d id_last=%d prompt_sz=%zu draft_n=%zu [%s]\n",
+                    n_past, (int)id_last, prompt_tgt.size(), draft.size(), draft_str.c_str());
+            }
+
             common_batch_clear(batch_tgt);
             common_batch_add  (batch_tgt, id_last, n_past++, { 0 }, true);
 
@@ -497,7 +505,19 @@ int main(int argc, char ** argv) {
                     ids = speculative_reject_sample(smpl, ctx_tgt, draft, draft_log_probs,
                         sample_temp, reject_rng);
                 } else {
+                    // [DBG-SD] verify-in
+                    {
+                        std::string dft_str;
+                        for (size_t i = 0; i < draft.size() && i < 24; i++) dft_str += std::to_string((int)draft[i]) + " ";
+                        fprintf(stderr, "[DBG-VERIFY-IN] n_draft=%zu drafted=[%s] (CLI flat impl overload)\n",
+                            draft.size(), dft_str.c_str());
+                    }
                     ids = common_sampler_sample_and_accept_n(smpl, ctx_tgt, draft);
+                    {
+                        std::string ids_str;
+                        for (size_t i = 0; i < ids.size() && i < 24; i++) ids_str += std::to_string((int)ids[i]) + " ";
+                        fprintf(stderr, "[DBG-VERIFY-OUT] accepted_n=%zu ids=[%s]\n", ids.size(), ids_str.c_str());
+                    }
                 }
             }
 

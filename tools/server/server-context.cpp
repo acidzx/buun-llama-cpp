@@ -2145,6 +2145,14 @@ private:
 
                 llama_tokens draft = common_speculative_draft(slot.spec, params_spec, cached_text_tokens, slot.sampled);
 
+                // [DBG-SD] log what the drafter produced from id_last
+                {
+                    std::string draft_str;
+                    for (size_t i = 0; i < draft.size() && i < 24; i++) draft_str += std::to_string((int)draft[i]) + " ";
+                    SLT_WRN(slot, "[DBG-DRAFT] iter_ndec=%d id_last=%d prompt_sz=%zu draft_n=%zu [%s]\n",
+                        slot.n_decoded, (int)slot.sampled, cached_text_tokens.size(), draft.size(), draft_str.c_str());
+                }
+
                 if (draft.size() > (size_t) n_draft_max) {
                     SLT_WRN(slot, "draft size %d exceeds max %d, truncating\n", (int) draft.size(), n_draft_max);
                     draft.resize(n_draft_max);
@@ -2996,8 +3004,25 @@ private:
 
                 const size_t n_draft = slot.drafted.size();
 
+                // [DBG-SD] log what we're about to verify
+                {
+                    std::string dft_str, idx_str;
+                    for (size_t i = 0; i < slot.drafted.size() && i < 24; i++) dft_str += std::to_string((int)slot.drafted[i]) + " ";
+                    for (size_t i = 0; i < slot.i_batch_dft.size() && i < 24; i++) idx_str += std::to_string((int)slot.i_batch_dft[i]) + " ";
+                    SLT_WRN(slot, "[DBG-VERIFY-IN] n_draft=%zu drafted=[%s] i_batch_dft_sz=%zu [%s]\n",
+                        slot.drafted.size(), dft_str.c_str(), slot.i_batch_dft.size(), idx_str.c_str());
+                }
+
                 // the accepted tokens from the speculation
                 const auto ids = common_sampler_sample_and_accept_n(slot.smpl.get(), ctx, slot.i_batch_dft, slot.drafted);
+
+                // [DBG-SD] log what the sampler committed
+                {
+                    std::string ids_str;
+                    for (size_t i = 0; i < ids.size() && i < 24; i++) ids_str += std::to_string((int)ids[i]) + " ";
+                    SLT_WRN(slot, "[DBG-VERIFY-OUT] accepted_n=%zu ids=[%s]\n", ids.size(), ids_str.c_str());
+                }
+
                 slot.i_batch_dft.clear();
                 slot.drafted.clear();
 
