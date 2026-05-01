@@ -437,11 +437,11 @@ FlashPrefillBuffers flash_prefill_alloc(int seq_len, int n_heads, int n_kv_heads
     FlashPrefillBuffers bufs = {};
     const int n_blocks = (seq_len + block_size - 1) / block_size;
 
-    cudaMalloc(&bufs->mean_K,   (size_t)n_blocks * n_kv_heads * D_HEAD * sizeof(__nv_bfloat16));
-    cudaMalloc(&bufs->scores,   (size_t)n_blocks * n_blocks * n_kv_heads * sizeof(float));
+    cudaMalloc(&bufs.mean_K,   (size_t)n_blocks * n_kv_heads * D_HEAD * sizeof(__nv_bfloat16));
+    cudaMalloc(&bufs.scores,   (size_t)n_blocks * n_blocks * n_kv_heads * sizeof(float));
     cudaMalloc(&bufs.score_max,(size_t)n_blocks * n_blocks * n_kv_heads * sizeof(float));
-    cudaMalloc(&bufs->indices,  (size_t)n_blocks * n_blocks * n_kv_heads * sizeof(int));
-    cudaMalloc(&bufs->counts,   (size_t)n_blocks * n_kv_heads * sizeof(int));
+    cudaMalloc(&bufs.indices,  (size_t)n_blocks * n_blocks * n_kv_heads * sizeof(int));
+    cudaMalloc(&bufs.counts,   (size_t)n_blocks * n_kv_heads * sizeof(int));
 
     return bufs;
 }
