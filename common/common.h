@@ -391,6 +391,12 @@ struct common_params_speculative {
     float   suffix_spec_offset  = 0.0f; // additive offset for max speculative tokens
     float   suffix_min_prob     = 0.1f; // prune branches below this probability
 
+    // PFlash: speculative prefill for long-context prompts
+    std::string pflash_scorer_path;        // scorer model GGUF (e.g., Qwen3-0.6B-BF16.gguf)
+    int32_t     pflash_min_tokens = 8192;  // minimum prompt length to trigger PFlash
+    float       pflash_keep_ratio = 0.05f; // fraction of chunks to keep
+    float       pflash_alpha      = 0.12f; // FlashPrefill block selection threshold
+
     bool has_dft() const {
         return !draft.mparams.path.empty() || !draft.mparams.hf_repo.empty();
     }
