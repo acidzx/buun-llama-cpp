@@ -763,6 +763,35 @@ private:
         prompt_cache->update();
     }
 
+    void recurrent_shrink_for_prefill(const char * reason) {
+        if (!recurrent_expanded || !needs_reeval || n_seq_max_full <= n_parallel_user) {
+            return;
+        }
+
+        for (const server_slot & slot : slots) {
+            if (slot.is_processing() || slot.has_draft_backup) {
+                SRV_DBG("not shrinking recurrent state for prefill (%s): slot %d processing=%d has_backup=%d\n",
+                        reason, slot.id, slot.is_processing(), slot.has_draft_backup);
+                return;
+            }
+        }
+
+        auto * mem = llama_get_memory(ctx);
+        for (const server_slot & slot : slots) {
+            const llama_seq_id seq_backup = slot.id + n_parallel_user;
+            llama_memory_seq_rm(mem, seq_backup, -1, -1);
+        }
+
+        if (llama_memory_recurrent_shrink(mem, n_parallel_user)) {
+            recurrent_expanded = false;
+            SRV_INF("shrunk recurrent state to %d cells for prefill (%s, removed %d backup cells)\n",
+                    n_parallel_user, reason, n_seq_max_full - n_parallel_user);
+        } else {
+            SRV_ERR("failed to shrink recurrent state to %d cells for prefill (%s)\n",
+                    n_parallel_user, reason);
+        }
+    }
+
     void handle_sleeping_state(bool new_state) {
         GGML_ASSERT(sleeping != new_state);
         if (new_state) {
@@ -1300,6 +1329,8 @@ private:
         }
 
         if (ret) {
+            recurrent_shrink_for_prefill("before prompt cache save/load");
+
             const auto & tokens = ret->prompt.tokens;
 
             update_cache = update_cache && prompt_cache;
@@ -2823,6 +2854,11 @@ private:
                                     if (!do_reset) {
                                         // restore the context checkpoint
                                         const size_t checkpoint_size = it->data.size();
+                                        SLT_DBG(slot,
+                                                "restoring context checkpoint data=%.3f MiB ring=%.3f MiB recurrent_expanded=%d n_parallel_user=%d n_seq_max_full=%d\n",
+                                                (float) it->data.size() / 1024 / 1024,
+                                                (float) it->ring_data.size() / 1024 / 1024,
+                                                recurrent_expanded, n_parallel_user, n_seq_max_full);
                                         const size_t n = llama_state_seq_set_data_ext(ctx, it->data.data(), checkpoint_size, slot.id, LLAMA_STATE_SEQ_FLAGS_PARTIAL_ONLY);
 
                                         if (n != checkpoint_size) {
