@@ -49,7 +49,8 @@ const std::map<std::string, enum common_speculative_type> common_speculative_typ
     {"suffix",        COMMON_SPECULATIVE_TYPE_SUFFIX},
     {"copyspec",      COMMON_SPECULATIVE_TYPE_COPYSPEC},
     {"recycle",       COMMON_SPECULATIVE_TYPE_RECYCLE},
-    {"dflash",        COMMON_SPECULATIVE_TYPE_DFLASH}
+    {"dflash",        COMMON_SPECULATIVE_TYPE_DFLASH},
+    {"mtp",           COMMON_SPECULATIVE_TYPE_MTP}
 };
 
 struct common_speculative_config {
@@ -2058,6 +2059,134 @@ static common_speculative_state_ngram_cache create_state_ngram_cache(
     return state;
 }
 
+// MTP (Multi-Token Prediction) speculative decoding
+// Uses the target model's built-in MTP head to predict the next token.
+// Depth-1 only: each target decode produces 1 draft token for the next iteration.
+struct common_speculative_state_mtp : public common_speculative_state {
+    llama_context * ctx_tgt;
+    llama_token mtp_draft = LLAMA_TOKEN_NULL;
+    llama_tokens mtp_chain_drafts; // chain depths 2..K
+    int n_update_calls = 0;
+    int n_total_accepted = 0;
+    int n_total_drafted = 0;
+
+    common_speculative_state_mtp(enum common_speculative_type type, llama_context * ctx)
+        : common_speculative_state(type), ctx_tgt(ctx) {}
+
+    ~common_speculative_state_mtp() {
+        if (n_update_calls > 0) {
+            float accept_rate = (float)n_total_accepted / n_total_drafted * 100.0f;
+            fprintf(stderr, "\nMTP STATS: cycles=%d drafted=%d accepted=%d rate=%.1f%%\n",
+                n_update_calls, n_total_drafted, n_total_accepted, accept_rate);
+        }
+    }
+
+    void begin(const llama_tokens & /*prompt*/) override {
+        mtp_draft = LLAMA_TOKEN_NULL;
+        mtp_chain_drafts.clear();
+    }
+
+    void draft(
+            const common_params_speculative & /*params*/,
+            const llama_tokens & /*prompt_tgt*/,
+            llama_token id_last,
+            llama_tokens & result,
+            std::vector<float> * /*draft_log_probs*/ = nullptr) override {
+        if (mtp_draft == LLAMA_TOKEN_NULL) {
+            int64_t vocab = llama_get_mtp_n_vocab(ctx_tgt);
+            if (vocab > 0) {
+                float * logits = llama_get_mtp_logits_ith(ctx_tgt, 0);
+                if (logits) {
+                    int best = 0;
+                    float best_val = logits[0];
+                    for (int64_t j = 1; j < vocab; ++j) {
+                        if (logits[j] > best_val) {
+                            best_val = logits[j];
+                            best = (int)j;
+                        }
+                    }
+                    mtp_draft = (llama_token)best;
+                }
+            }
+        }
+        if (mtp_draft != LLAMA_TOKEN_NULL) {
+            result.push_back(mtp_draft);
+            for (auto t : mtp_chain_drafts) {
+                result.push_back(t);
+            }
+        }
+    }
+
+    void accept(uint16_t /*n_accepted*/) override {}
+
+    int32_t n_max(const common_params_speculative & params) const override {
+        int64_t vocab = llama_get_mtp_n_vocab(ctx_tgt);
+        if (vocab <= 0) return 0;
+        int32_t chain = llama_get_mtp_chain_depth(ctx_tgt);
+        int32_t depth = 1 + chain;
+        return std::min((int32_t)params.n_max, depth);
+    }
+
+    int32_t n_min(const common_params_speculative & params) const override {
+        return std::min((int32_t)params.n_min, (int32_t)1);
+    }
+
+    void update_logits(llama_context * ctx, const llama_tokens & batch_tokens, int n_accepted) override {
+        GGML_UNUSED(batch_tokens);
+        mtp_chain_drafts.clear();
+
+        n_update_calls++;
+        n_total_drafted += 1; // MTP drafts 1 token per cycle
+        n_total_accepted += (n_accepted > 1) ? 1 : 0; // draft accepted if n_accepted > 1 (bonus token doesn't count)
+
+        int64_t mtp_vocab = llama_get_mtp_n_vocab(ctx);
+        if (mtp_vocab <= 0 || n_accepted <= 0) {
+            mtp_draft = LLAMA_TOKEN_NULL;
+            return;
+        }
+
+        // get MTP logits at the last accepted position
+        // n_accepted includes bonus token, so the last accepted position index = n_accepted - 1
+        int read_idx = n_accepted - 1;
+        float * mtp_logits = llama_get_mtp_logits_ith(ctx, read_idx);
+        if (!mtp_logits) {
+            mtp_draft = LLAMA_TOKEN_NULL;
+            return;
+        }
+
+        // argmax
+        int best_id = 0;
+        float best_val = mtp_logits[0];
+        for (int64_t j = 1; j < mtp_vocab; ++j) {
+            if (mtp_logits[j] > best_val) {
+                best_val = mtp_logits[j];
+                best_id = (int)j;
+            }
+        }
+        mtp_draft = (llama_token)best_id;
+
+        // read chain logits for deeper predictions
+        int32_t chain_depth = llama_get_mtp_chain_depth(ctx);
+        for (int k = 0; k < chain_depth; ++k) {
+            float * chain_logits = llama_get_mtp_chain_logits_ith(ctx, k, read_idx);
+            if (!chain_logits) break;
+            int chain_best = 0;
+            float chain_best_val = chain_logits[0];
+            float chain_second_val = -1e9f;
+            for (int64_t j = 1; j < mtp_vocab; ++j) {
+                if (chain_logits[j] > chain_best_val) {
+                    chain_second_val = chain_best_val;
+                    chain_best_val = chain_logits[j];
+                    chain_best = (int)j;
+                } else if (chain_logits[j] > chain_second_val) {
+                    chain_second_val = chain_logits[j];
+                }
+            }
+            mtp_chain_drafts.push_back((llama_token)chain_best);
+        }
+    }
+};
+
 std::string common_speculative_type_name_str() {
     std::string result;
     for (size_t i = 0; i < common_speculative_types.size(); i++) {
@@ -2083,6 +2212,7 @@ std::string common_speculative_type_to_str(enum common_speculative_type type) {
         case COMMON_SPECULATIVE_TYPE_COPYSPEC:      return "copyspec";
         case COMMON_SPECULATIVE_TYPE_RECYCLE:       return "recycle";
         case COMMON_SPECULATIVE_TYPE_DFLASH:        return "dflash";
+        case COMMON_SPECULATIVE_TYPE_MTP:           return "mtp";
         default:                                    return "unknown";
     }
 }
@@ -2184,6 +2314,7 @@ common_speculative * common_speculative_init(
         bool has_copyspec      = (params.type == COMMON_SPECULATIVE_TYPE_COPYSPEC);
         bool has_recycle       = (params.type == COMMON_SPECULATIVE_TYPE_RECYCLE);
         bool has_dflash        = (params.type == COMMON_SPECULATIVE_TYPE_DFLASH);
+        bool has_mtp           = (params.type == COMMON_SPECULATIVE_TYPE_MTP);
 
         // DFlash uses --model-draft but is NOT a standard draft model
         if (has_dflash) {
@@ -2231,6 +2362,9 @@ common_speculative * common_speculative_init(
         }
         if (has_suffix) {
             configs.push_back(common_speculative_config(COMMON_SPECULATIVE_TYPE_SUFFIX, params));
+        }
+        if (has_mtp) {
+            configs.push_back(common_speculative_config(COMMON_SPECULATIVE_TYPE_MTP, params));
         }
         if (has_dflash) {
             // CopySpec before DFlash: fires as primary only for long matches (2*n_max+)
@@ -2346,6 +2480,19 @@ common_speculative * common_speculative_init(
                 ));
                 LOG_INF("%s: token recycling speculative decoding (k=%d)\n",
                     __func__, config.params.recycle_k);
+                break;
+            }
+            case COMMON_SPECULATIVE_TYPE_MTP: {
+                int32_t n_mtp = llama_model_n_mtp_layers(llama_get_model(ctx_tgt));
+                if (n_mtp > 0) {
+                    llama_set_mtp_enabled(ctx_tgt, true);
+                    impls.push_back(std::make_unique<common_speculative_state_mtp>(
+                        config.type, ctx_tgt));
+                    LOG_INF("%s: MTP speculative decoding (depth=1, %d MTP layers, fused graph)\n",
+                        __func__, n_mtp);
+                } else {
+                    LOG_ERR("%s: MTP requested but model has no MTP layers\n", __func__);
+                }
                 break;
             }
             default:

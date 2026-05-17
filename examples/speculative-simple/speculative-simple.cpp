@@ -141,7 +141,8 @@ int main(int argc, char ** argv) {
             params.speculative.type != COMMON_SPECULATIVE_TYPE_NGRAM_CACHE &&
             params.speculative.type != COMMON_SPECULATIVE_TYPE_SUFFIX &&
             params.speculative.type != COMMON_SPECULATIVE_TYPE_COPYSPEC &&
-            params.speculative.type != COMMON_SPECULATIVE_TYPE_RECYCLE) {
+            params.speculative.type != COMMON_SPECULATIVE_TYPE_RECYCLE &&
+            params.speculative.type != COMMON_SPECULATIVE_TYPE_MTP) {
         LOG_ERR("%s: --model-draft is required (unless using a model-free --spec-type)\n", __func__);
         return 1;
     }
@@ -262,6 +263,14 @@ int main(int argc, char ** argv) {
 
     // used to determine end of generation
     bool has_eos = false;
+
+    // Mode D: MTP token from previous target eval, prepended to DFlash draft
+    llama_token mtp_next = LLAMA_TOKEN_NULL;
+    int mtp_chain_read_idx = 0; // output index where chain logits were read
+    int n_mtp_prepend = 0; // count of times MTP was prepended
+    int n_mtp_accepted = 0; // count of times the prepended MTP depth-1 token was accepted
+    int n_mtp_chain_total = 0; // total MTP chain tokens prepended
+    int n_mtp_chain_accepted = 0; // total MTP chain tokens accepted (consecutive from depth 1)
 
     // hybrid models with recurrent layers need state management after partial rejection
     const bool needs_reeval = llama_model_is_recurrent(model_tgt) || llama_model_is_hybrid(model_tgt);
@@ -415,9 +424,49 @@ int main(int argc, char ** argv) {
                 }
 
                 llama_clear_tree_mask(ctx_tgt);
-                // Note: tree_parent_ids stays active until tree_rollback clears it
 
                 LOG_DBG("[iter %d] tree decode: n_nodes=%d, n_past=%d\n", n_iters, tree.n_nodes, n_past);
+
+                // MTP branch enrichment: add conditional next-next-token candidates
+                int n_mtp_branches = 0;
+                {
+                    int64_t mtp_vocab = llama_get_mtp_n_vocab(ctx_tgt);
+                    if (mtp_vocab > 0 && tree.main_path_len > 0) {
+                        for (int i = 0; i < tree.main_path_len; ++i) {
+                            float * mtp_logits = llama_get_mtp_logits_ith(ctx_tgt, i);
+                            if (!mtp_logits) continue;
+
+                            int parent_node = i + 1;
+                            int child_depth = i + 2;
+
+                            int best_id = 0;
+                            float best_val = mtp_logits[0];
+                            for (int64_t j = 1; j < mtp_vocab; ++j) {
+                                if (mtp_logits[j] > best_val) {
+                                    best_val = mtp_logits[j];
+                                    best_id = (int)j;
+                                }
+                            }
+                            llama_token mtp_token = (llama_token)best_id;
+
+                            if (tree.child_maps[parent_node].count(mtp_token)) continue;
+
+                            int new_idx = tree.n_nodes + 1;
+                            tree.tokens.push_back(mtp_token);
+                            tree.parents.push_back(parent_node);
+                            tree.depths.push_back(child_depth);
+                            tree.child_maps.push_back({});
+                            tree.child_maps[parent_node][mtp_token] = new_idx;
+                            tree.n_nodes++;
+                            n_mtp_branches++;
+                        }
+                    }
+                }
+                n_draft_this_iter += n_mtp_branches;
+                if (n_mtp_branches > 0) {
+                    LOG_INF("mtp_branches: added %d branches to tree (%d total nodes)\n",
+                            n_mtp_branches, tree.n_nodes);
+                }
 
                 // Tree walk: all logits available from single pass
                 {
@@ -497,6 +546,38 @@ int main(int argc, char ** argv) {
                 }
             }
 
+            // Mode D: replace DFlash[0] with MTP prediction from previous target eval
+            // MTP and DFlash[0] both predict position N+1 — use MTP's better prediction
+            bool mtp_prepended = false;
+            int n_mtp_in_draft = 0;
+            if (mtp_next != LLAMA_TOKEN_NULL && !draft.empty()) {
+                draft[0] = mtp_next;
+                n_mtp_in_draft = 1;
+
+                // Also insert chain tokens after MTP[0], shifting DFlash tokens
+                int32_t chain_depth = llama_get_mtp_chain_depth(ctx_tgt);
+                int64_t mtp_vocab_chain = llama_get_mtp_n_vocab(ctx_tgt);
+                for (int k = 0; k < chain_depth && n_mtp_in_draft < (int)draft.size(); ++k) {
+                    float * chain_ptr = llama_get_mtp_chain_logits_ith(ctx_tgt, k, mtp_chain_read_idx);
+                    if (!chain_ptr) break;
+                    int best_id = 0;
+                    float best_val = chain_ptr[0];
+                    for (int64_t j = 1; j < mtp_vocab_chain; ++j) {
+                        if (chain_ptr[j] > best_val) {
+                            best_val = chain_ptr[j];
+                            best_id = (int)j;
+                        }
+                    }
+                    // Replace draft[n_mtp_in_draft] with chain prediction
+                    draft[n_mtp_in_draft] = (llama_token)best_id;
+                    n_mtp_in_draft++;
+                }
+
+                n_mtp_prepend++;
+                mtp_prepended = true;
+                mtp_next = LLAMA_TOKEN_NULL;
+            }
+
             common_batch_clear(batch_tgt);
             common_batch_add  (batch_tgt, id_last, n_past++, { 0 }, true);
 
@@ -557,6 +638,17 @@ int main(int argc, char ** argv) {
 
             n_draft_this_iter = (int)draft.size();
 
+            // Mode D: track MTP acceptance
+            if (mtp_prepended) {
+                n_mtp_chain_total += n_mtp_in_draft;
+                if (ids.size() >= 2) {
+                    n_mtp_accepted++;
+                    // count consecutive MTP chain tokens accepted
+                    int chain_accepted = std::min(n_mtp_in_draft, (int)ids.size() - 1);
+                    n_mtp_chain_accepted += chain_accepted;
+                }
+            }
+
             // update draft strategies with logits (e.g. token recycling adjacency matrix)
             {
                 llama_tokens batch_tokens;
@@ -567,11 +659,9 @@ int main(int argc, char ** argv) {
 
         } // end flat path
 
-        GGML_ASSERT(ids.size() > 0); // there will always be at least one accepted token
+        GGML_ASSERT(ids.size() > 0);
 
-        // check for partial draft acceptance:
-        // if the context doesn't support partial sequence removal, restore the checkpoint
-        // and make the accepted tokens the new partial draft for the next iteration
+        // check for partial draft acceptance
         if (use_ckpt && ids.size() - 1 < draft.size()) {
             LOG_DBG("partial acceptance: %zu < %zu, restoring checkpoint\n", ids.size() - 1, draft.size());
 
@@ -754,6 +844,14 @@ int main(int argc, char ** argv) {
     LOG_INF("n_drafted = %d\n", n_drafted);
     LOG_INF("n_accept  = %d\n", n_accept);
     LOG_INF("accept    = %.3f%%\n", 100.0f * n_accept / n_drafted);
+    if (n_mtp_prepend > 0) {
+        LOG_INF("mtp_prepend = %d/%d depth-1 accepted (%.1f%%)\n", n_mtp_accepted, n_mtp_prepend,
+                100.0f * n_mtp_accepted / n_mtp_prepend);
+        if (n_mtp_chain_total > 0) {
+            LOG_INF("mtp_chain   = %d/%d chain tokens accepted (%.1f%%)\n", n_mtp_chain_accepted, n_mtp_chain_total,
+                    100.0f * n_mtp_chain_accepted / n_mtp_chain_total);
+        }
+    }
 
     // per-position rejection histogram
     {
