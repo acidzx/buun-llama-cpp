@@ -557,8 +557,7 @@ private:
     bool mtp_logits_valid = false;
 
     // MTP chain logits
-    static constexpr int MTP_CHAIN_MAX = 3;
-    std::vector<float> mtp_chain_logits[MTP_CHAIN_MAX];
+    std::vector<float> mtp_chain_logits[llm_graph_result::MTP_CHAIN_MAX];
     int32_t mtp_chain_depth = 0;
 
     // MTP persistent KV buffer (1 layer, separate from main KV cache)

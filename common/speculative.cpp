@@ -2089,7 +2089,7 @@ struct common_speculative_state_mtp : public common_speculative_state {
     void draft(
             const common_params_speculative & /*params*/,
             const llama_tokens & /*prompt_tgt*/,
-            llama_token id_last,
+            llama_token /*id_last*/,
             llama_tokens & result,
             std::vector<float> * /*draft_log_probs*/ = nullptr) override {
         if (mtp_draft == LLAMA_TOKEN_NULL) {
@@ -2097,15 +2097,7 @@ struct common_speculative_state_mtp : public common_speculative_state {
             if (vocab > 0) {
                 float * logits = llama_get_mtp_logits_ith(ctx_tgt, 0);
                 if (logits) {
-                    int best = 0;
-                    float best_val = logits[0];
-                    for (int64_t j = 1; j < vocab; ++j) {
-                        if (logits[j] > best_val) {
-                            best_val = logits[j];
-                            best = (int)j;
-                        }
-                    }
-                    mtp_draft = (llama_token)best;
+                    mtp_draft = (llama_token)(std::max_element(logits, logits + vocab) - logits);
                 }
             }
         }
@@ -2136,8 +2128,8 @@ struct common_speculative_state_mtp : public common_speculative_state {
         mtp_chain_drafts.clear();
 
         n_update_calls++;
-        n_total_drafted += 1; // MTP drafts 1 token per cycle
-        n_total_accepted += (n_accepted > 1) ? 1 : 0; // draft accepted if n_accepted > 1 (bonus token doesn't count)
+        n_total_drafted += 1;
+        n_total_accepted += (n_accepted > 1) ? 1 : 0;
 
         int64_t mtp_vocab = llama_get_mtp_n_vocab(ctx);
         if (mtp_vocab <= 0 || n_accepted <= 0) {
@@ -2145,8 +2137,6 @@ struct common_speculative_state_mtp : public common_speculative_state {
             return;
         }
 
-        // get MTP logits at the last accepted position
-        // n_accepted includes bonus token, so the last accepted position index = n_accepted - 1
         int read_idx = n_accepted - 1;
         float * mtp_logits = llama_get_mtp_logits_ith(ctx, read_idx);
         if (!mtp_logits) {
@@ -2154,35 +2144,14 @@ struct common_speculative_state_mtp : public common_speculative_state {
             return;
         }
 
-        // argmax
-        int best_id = 0;
-        float best_val = mtp_logits[0];
-        for (int64_t j = 1; j < mtp_vocab; ++j) {
-            if (mtp_logits[j] > best_val) {
-                best_val = mtp_logits[j];
-                best_id = (int)j;
-            }
-        }
-        mtp_draft = (llama_token)best_id;
+        mtp_draft = (llama_token)(std::max_element(mtp_logits, mtp_logits + mtp_vocab) - mtp_logits);
 
-        // read chain logits for deeper predictions
         int32_t chain_depth = llama_get_mtp_chain_depth(ctx);
         for (int k = 0; k < chain_depth; ++k) {
             float * chain_logits = llama_get_mtp_chain_logits_ith(ctx, k, read_idx);
             if (!chain_logits) break;
-            int chain_best = 0;
-            float chain_best_val = chain_logits[0];
-            float chain_second_val = -1e9f;
-            for (int64_t j = 1; j < mtp_vocab; ++j) {
-                if (chain_logits[j] > chain_best_val) {
-                    chain_second_val = chain_best_val;
-                    chain_best_val = chain_logits[j];
-                    chain_best = (int)j;
-                } else if (chain_logits[j] > chain_second_val) {
-                    chain_second_val = chain_logits[j];
-                }
-            }
-            mtp_chain_drafts.push_back((llama_token)chain_best);
+            mtp_chain_drafts.push_back(
+                (llama_token)(std::max_element(chain_logits, chain_logits + mtp_vocab) - chain_logits));
         }
     }
 };

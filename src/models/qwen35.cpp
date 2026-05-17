@@ -89,8 +89,7 @@ llm_build_qwen35::llm_build_qwen35(const llama_model & model, const llm_graph_pa
 
     ggml_build_forward_expand(gf, cur);
 
-    // MTP (Multi-Token Prediction) head with optional chain (self-chaining with attention)
-    // Only build when explicitly enabled (--spec-type mtp) to avoid baseline penalty.
+    // Gated on mtp_enabled to avoid baseline penalty when not active
     if (hparams.nextn_predict_layers > 0 && n_outputs == n_tokens && cparams.mtp_enabled) {
         const int mtp_il = n_main_layers;
         const int64_t n_embd_head = hparams.n_embd_head_v();
@@ -119,8 +118,6 @@ llm_build_qwen35::llm_build_qwen35(const llama_model & model, const llm_graph_pa
             res->add_input(std::move(inp_chain));
         }
 
-        // Chain step helper: projects Q/K/V, applies RoPE, attends over accumulated K/V,
-        // applies gate, output proj, residual, FFN. Used for chain depths 1-3 only.
         struct mtp_step_result { ggml_tensor * hidden; ggml_tensor * K; ggml_tensor * V; };
 
         auto mtp_chain_step = [&](ggml_tensor * projected, ggml_tensor * pos_tensor, int64_t n_tok,

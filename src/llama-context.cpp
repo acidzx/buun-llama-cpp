@@ -3436,7 +3436,7 @@ int llama_context::decode(const llama_batch & batch_inp) {
         // extract MTP chain logits (only when graph includes chain AND has outputs)
         if (res->t_logits_mtp_chain[0] && n_outputs > 0 && mtp_n_vocab > 0) {
             mtp_chain_depth = 0;
-            for (int k = 0; k < MTP_CHAIN_MAX; ++k) {
+            for (int k = 0; k < llm_graph_result::MTP_CHAIN_MAX; ++k) {
                 ggml_tensor * t_chain = res->t_logits_mtp_chain[k];
                 if (!t_chain) break;
                 ggml_backend_t backend_chain = ggml_backend_sched_get_tensor_backend(sched.get(), t_chain);
