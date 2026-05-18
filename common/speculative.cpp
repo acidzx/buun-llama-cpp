@@ -2065,13 +2065,24 @@ static common_speculative_state_ngram_cache create_state_ngram_cache(
 struct common_speculative_state_mtp : public common_speculative_state {
     llama_context * ctx_tgt;
     llama_token mtp_draft = LLAMA_TOKEN_NULL;
-    llama_tokens mtp_chain_drafts; // chain depths 2..K
+    float mtp_draft_prob = 0.0f;
+    llama_tokens mtp_chain_drafts;
+    std::vector<float> mtp_chain_probs;
     int n_update_calls = 0;
     int n_total_accepted = 0;
     int n_total_drafted = 0;
 
     common_speculative_state_mtp(enum common_speculative_type type, llama_context * ctx)
         : common_speculative_state(type), ctx_tgt(ctx) {}
+
+    static float top1_prob(const float * logits, int64_t n) {
+        float max_val = *std::max_element(logits, logits + n);
+        double sum = 0.0;
+        for (int64_t i = 0; i < n; ++i) {
+            sum += expf(logits[i] - max_val);
+        }
+        return (float)(1.0 / sum);
+    }
 
     ~common_speculative_state_mtp() {
         if (n_update_calls > 0) {
@@ -2083,28 +2094,34 @@ struct common_speculative_state_mtp : public common_speculative_state {
 
     void begin(const llama_tokens & /*prompt*/) override {
         mtp_draft = LLAMA_TOKEN_NULL;
+        mtp_draft_prob = 0.0f;
         mtp_chain_drafts.clear();
+        mtp_chain_probs.clear();
     }
 
     void draft(
-            const common_params_speculative & /*params*/,
+            const common_params_speculative & params,
             const llama_tokens & /*prompt_tgt*/,
             llama_token /*id_last*/,
             llama_tokens & result,
             std::vector<float> * /*draft_log_probs*/ = nullptr) override {
+        const float p_min = params.draft.p_min;
+
         if (mtp_draft == LLAMA_TOKEN_NULL) {
             int64_t vocab = llama_get_mtp_n_vocab(ctx_tgt);
             if (vocab > 0) {
                 float * logits = llama_get_mtp_logits_ith(ctx_tgt, 0);
                 if (logits) {
                     mtp_draft = (llama_token)(std::max_element(logits, logits + vocab) - logits);
+                    mtp_draft_prob = top1_prob(logits, vocab);
                 }
             }
         }
-        if (mtp_draft != LLAMA_TOKEN_NULL) {
+        if (mtp_draft != LLAMA_TOKEN_NULL && mtp_draft_prob >= p_min) {
             result.push_back(mtp_draft);
-            for (auto t : mtp_chain_drafts) {
-                result.push_back(t);
+            for (size_t i = 0; i < mtp_chain_drafts.size(); ++i) {
+                if (mtp_chain_probs[i] < p_min) break;
+                result.push_back(mtp_chain_drafts[i]);
             }
         }
     }
@@ -2116,16 +2133,17 @@ struct common_speculative_state_mtp : public common_speculative_state {
         if (vocab <= 0) return 0;
         int32_t chain = llama_get_mtp_chain_depth(ctx_tgt);
         int32_t depth = 1 + chain;
-        return std::min((int32_t)params.n_max, depth);
+        return std::min(params.draft.n_max, depth);
     }
 
     int32_t n_min(const common_params_speculative & params) const override {
-        return std::min((int32_t)params.n_min, (int32_t)1);
+        return std::min(params.draft.n_min, (int32_t)1);
     }
 
     void update_logits(llama_context * ctx, const llama_tokens & batch_tokens, int n_accepted) override {
         GGML_UNUSED(batch_tokens);
         mtp_chain_drafts.clear();
+        mtp_chain_probs.clear();
 
         n_update_calls++;
         n_total_drafted += 1;
@@ -2134,6 +2152,7 @@ struct common_speculative_state_mtp : public common_speculative_state {
         int64_t mtp_vocab = llama_get_mtp_n_vocab(ctx);
         if (mtp_vocab <= 0 || n_accepted <= 0) {
             mtp_draft = LLAMA_TOKEN_NULL;
+            mtp_draft_prob = 0.0f;
             return;
         }
 
@@ -2141,10 +2160,12 @@ struct common_speculative_state_mtp : public common_speculative_state {
         float * mtp_logits = llama_get_mtp_logits_ith(ctx, read_idx);
         if (!mtp_logits) {
             mtp_draft = LLAMA_TOKEN_NULL;
+            mtp_draft_prob = 0.0f;
             return;
         }
 
         mtp_draft = (llama_token)(std::max_element(mtp_logits, mtp_logits + mtp_vocab) - mtp_logits);
+        mtp_draft_prob = top1_prob(mtp_logits, mtp_vocab);
 
         int32_t chain_depth = llama_get_mtp_chain_depth(ctx);
         for (int k = 0; k < chain_depth; ++k) {
@@ -2152,6 +2173,7 @@ struct common_speculative_state_mtp : public common_speculative_state {
             if (!chain_logits) break;
             mtp_chain_drafts.push_back(
                 (llama_token)(std::max_element(chain_logits, chain_logits + mtp_vocab) - chain_logits));
+            mtp_chain_probs.push_back(top1_prob(chain_logits, mtp_vocab));
         }
     }
 };

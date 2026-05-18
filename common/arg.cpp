@@ -3652,7 +3652,7 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
         }
     ).set_spec().set_examples({LLAMA_EXAMPLE_SPECULATIVE, LLAMA_EXAMPLE_SERVER, LLAMA_EXAMPLE_CLI}));
     add_opt(common_arg(
-        {"--spec-type"}, "[none|ngram-cache|ngram-simple|ngram-map-k|ngram-map-k4v|ngram-mod|suffix|copyspec|recycle|dflash|mtp]",
+        {"--spec-type"}, "[none|ngram-cache|ngram-simple|ngram-map-k|ngram-map-k4v|ngram-mod|suffix|copyspec|recycle|dflash|mtp|draft-mtp]",
         string_format("type of speculative decoding to use when no draft model is provided (default: %s)\n",
             common_speculative_type_to_str(params.speculative.type).c_str()),
         [](common_params & params, const std::string & value) {
@@ -3676,8 +3676,11 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
                 params.speculative.type = COMMON_SPECULATIVE_TYPE_RECYCLE;
             } else if (value == "dflash") {
                 params.speculative.type = COMMON_SPECULATIVE_TYPE_DFLASH;
-            } else if (value == "mtp") {
+            } else if (value == "mtp" || value == "draft-mtp") {
                 params.speculative.type = COMMON_SPECULATIVE_TYPE_MTP;
+                // In-graph MTP: drafts are free, so p_min filtering hurts throughput.
+                // Override upstream default (0.75) unless user explicitly sets it later.
+                params.speculative.draft.p_min = 0.0f;
             } else {
                 throw std::invalid_argument("unknown speculative decoding type without draft model");
             }
