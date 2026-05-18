@@ -3505,15 +3505,16 @@ private:
                         }
                     }
 
-                    // MTP KV rollback (no backup path — MTP skips backup to preserve CUDA graphs)
-                    if (params_base.speculative.type == COMMON_SPECULATIVE_TYPE_MTP) {
-                        llama_mtp_kv_seq_rm(ctx, slot.mtp_kv_n_before_draft + (int) ids.size());
-                    }
-
                     slot.has_draft_backup = false;
                     slot.seq_id_backup = -1;
                 } else {
                     llama_memory_seq_rm(llama_get_memory(ctx), slot.id, slot.prompt.n_tokens(), -1);
+                }
+
+                // MTP KV rollback — must run regardless of has_draft_backup
+                // (MTP skips backup to preserve CUDA graphs, so has_draft_backup is always false for MTP)
+                if (params_base.speculative.type == COMMON_SPECULATIVE_TYPE_MTP) {
+                    llama_mtp_kv_seq_rm(ctx, slot.mtp_kv_n_before_draft + (int) ids.size());
                 }
 
                 for (size_t i = 0; i < ids.size(); ++i) {

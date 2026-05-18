@@ -2079,8 +2079,6 @@ struct common_speculative_state_mtp : public common_speculative_state {
         return (float)(1.0 / sum);
     }
 
-    ~common_speculative_state_mtp() override = default;
-
     void begin(const llama_tokens & /*prompt*/) override {
         mtp_chain_drafts.clear();
         mtp_chain_probs.clear();
@@ -2117,7 +2115,8 @@ struct common_speculative_state_mtp : public common_speculative_state {
 
         if (mtp_draft != LLAMA_TOKEN_NULL && mtp_draft_prob >= p_min) {
             result.push_back(mtp_draft);
-            for (size_t i = 0; i < mtp_chain_drafts.size(); ++i) {
+            const int32_t cap = params.draft.n_max;
+            for (size_t i = 0; i < mtp_chain_drafts.size() && (int32_t)result.size() < cap; ++i) {
                 if (mtp_chain_probs[i] < p_min) break;
                 result.push_back(mtp_chain_drafts[i]);
             }
@@ -2139,7 +2138,6 @@ struct common_speculative_state_mtp : public common_speculative_state {
     }
 
     void update_logits(llama_context * ctx, const llama_tokens & batch_tokens, int n_accepted) override {
-        GGML_UNUSED(batch_tokens);
         mtp_chain_drafts.clear();
         mtp_chain_probs.clear();
 
@@ -2161,15 +2159,19 @@ struct common_speculative_state_mtp : public common_speculative_state {
         mtp_draft = (llama_token)(std::max_element(mtp_logits, mtp_logits + mtp_vocab) - mtp_logits);
         mtp_draft_prob = top1_prob(mtp_logits, mtp_vocab);
 
-        int32_t chain_depth = llama_get_mtp_chain_depth(ctx);
-        for (int k = 0; k < chain_depth; ++k) {
-            float * chain_logits = llama_get_mtp_chain_logits_ith(ctx, k, read_idx);
-            if (!chain_logits) break;
-            mtp_chain_drafts.push_back(
-                (llama_token)(std::max_element(chain_logits, chain_logits + mtp_vocab) - chain_logits));
-            mtp_chain_probs.push_back(top1_prob(chain_logits, mtp_vocab));
+        // Chain logits are only valid when all drafts were accepted (chain computes from last batch position)
+        if (n_accepted == (int)batch_tokens.size()) {
+            int32_t chain_depth = llama_get_mtp_chain_depth(ctx);
+            for (int k = 0; k < chain_depth; ++k) {
+                float * chain_logits = llama_get_mtp_chain_logits_ith(ctx, k, read_idx);
+                if (!chain_logits) break;
+                mtp_chain_drafts.push_back(
+                    (llama_token)(std::max_element(chain_logits, chain_logits + mtp_vocab) - chain_logits));
+                mtp_chain_probs.push_back(top1_prob(chain_logits, mtp_vocab));
+            }
         }
     }
+
 };
 
 std::string common_speculative_type_name_str() {

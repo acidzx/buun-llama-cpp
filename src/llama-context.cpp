@@ -2309,6 +2309,9 @@ void llama_context::set_mtp_enabled(bool enabled) {
         if (mtp_n_vocab == 0) {
             mtp_n_vocab = model.vocab.n_tokens();
         }
+        if (mtp_chain_depth == 0) {
+            mtp_chain_depth = 2;
+        }
     }
 }
 

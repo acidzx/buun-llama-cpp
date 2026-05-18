@@ -96,7 +96,7 @@ llm_build_qwen35::llm_build_qwen35(const llama_model & model, const llm_graph_pa
         const int64_t n_head_q    = hparams.n_head();
         const int64_t n_head_kv   = hparams.n_head_kv();
         const float kq_scale = hparams.f_attention_scale == 0.0f ? 1.0f / sqrtf(float(n_embd_head)) : hparams.f_attention_scale;
-        const int n_chain = 2; // chain depth 2 = 3 total MTP predictions
+        const int n_chain = 2;
 
         ggml_tensor * mtp_norm_w = model.layers[mtp_il].nextn.shared_head_norm
                                  ? model.layers[mtp_il].nextn.shared_head_norm
