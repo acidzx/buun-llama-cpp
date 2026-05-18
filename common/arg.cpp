@@ -3678,11 +3678,7 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
                 params.speculative.type = COMMON_SPECULATIVE_TYPE_DFLASH;
             } else if (value == "mtp" || value == "draft-mtp") {
                 params.speculative.type = COMMON_SPECULATIVE_TYPE_MTP;
-                // In-graph MTP: drafts are free, so p_min filtering hurts throughput.
                 params.speculative.draft.p_min = 0.0f;
-                // n_max=2 optimal: 3rd chain token has poor acceptance (~64%) and the
-                // extra verify cost (~8ms) doesn't pay off. User can override with
-                // --spec-draft-n-max 3 if their workload benefits from deeper chain.
                 params.speculative.draft.n_max = 2;
             } else {
                 throw std::invalid_argument("unknown speculative decoding type without draft model");

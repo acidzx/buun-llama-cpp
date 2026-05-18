@@ -2059,18 +2059,13 @@ static common_speculative_state_ngram_cache create_state_ngram_cache(
     return state;
 }
 
-// MTP (Multi-Token Prediction) speculative decoding
-// Uses the target model's built-in MTP head to predict the next token.
-// Depth-1 only: each target decode produces 1 draft token for the next iteration.
+// MTP speculative decoding: uses the target model's built-in MTP head (in-graph).
 struct common_speculative_state_mtp : public common_speculative_state {
     llama_context * ctx_tgt;
     llama_token mtp_draft = LLAMA_TOKEN_NULL;
     float mtp_draft_prob = 0.0f;
     llama_tokens mtp_chain_drafts;
     std::vector<float> mtp_chain_probs;
-    int n_update_calls = 0;
-    int n_total_accepted = 0;
-    int n_total_drafted = 0;
 
     common_speculative_state_mtp(enum common_speculative_type type, llama_context * ctx)
         : common_speculative_state(type), ctx_tgt(ctx) {}
@@ -2090,9 +2085,7 @@ struct common_speculative_state_mtp : public common_speculative_state {
         mtp_chain_drafts.clear();
         mtp_chain_probs.clear();
 
-        // Try to pre-populate draft from context's MTP output (e.g. from a previous decode).
-        // During prompt eval, MTP logits aren't produced (gate: n_outputs == n_tokens), so
-        // this will only succeed if there's a prior generation decode in the same context.
+        // Pre-populate from context's MTP output if available (not present after prompt eval).
         int64_t vocab = llama_get_mtp_n_vocab(ctx_tgt);
         if (vocab > 0) {
             float * logits = llama_get_mtp_logits_ith(ctx_tgt, 0);
@@ -2122,16 +2115,6 @@ struct common_speculative_state_mtp : public common_speculative_state {
             std::vector<float> * /*draft_log_probs*/ = nullptr) override {
         const float p_min = params.draft.p_min;
 
-        if (mtp_draft == LLAMA_TOKEN_NULL) {
-            int64_t vocab = llama_get_mtp_n_vocab(ctx_tgt);
-            if (vocab > 0) {
-                float * logits = llama_get_mtp_logits_ith(ctx_tgt, 0);
-                if (logits) {
-                    mtp_draft = (llama_token)(std::max_element(logits, logits + vocab) - logits);
-                    mtp_draft_prob = top1_prob(logits, vocab);
-                }
-            }
-        }
         if (mtp_draft != LLAMA_TOKEN_NULL && mtp_draft_prob >= p_min) {
             result.push_back(mtp_draft);
             for (size_t i = 0; i < mtp_chain_drafts.size(); ++i) {
@@ -2159,10 +2142,6 @@ struct common_speculative_state_mtp : public common_speculative_state {
         GGML_UNUSED(batch_tokens);
         mtp_chain_drafts.clear();
         mtp_chain_probs.clear();
-
-        n_update_calls++;
-        n_total_drafted += 1;
-        n_total_accepted += (n_accepted > 1) ? 1 : 0;
 
         int64_t mtp_vocab = llama_get_mtp_n_vocab(ctx);
         if (mtp_vocab <= 0 || n_accepted <= 0) {

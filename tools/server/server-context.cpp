@@ -227,6 +227,7 @@ struct server_slot {
         has_draft_backup = false;
         seq_id_backup = -1;
         n_tokens_before_draft = 0;
+        mtp_kv_n_before_draft = 0;
 
         task_prev = std::move(task);
         task.reset();
