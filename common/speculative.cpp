@@ -1881,6 +1881,9 @@ struct common_speculative_impl_dflash : public common_speculative_impl {
 
             const int64_t t0 = ggml_time_us();
 
+            // reset drafter state before each block-mode draft
+            llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, -1, -1);
+
             int cross_len = build_cross_data(ctx_dft);
 
             const int64_t t1 = ggml_time_us();
@@ -1984,6 +1987,8 @@ struct common_speculative_impl_dflash : public common_speculative_impl {
         // run drafter forward pass (same as flat draft)
         // --- begin shared draft setup ---
         const int64_t t0 = ggml_time_us();
+
+        llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, -1, -1);
 
         int cross_len = build_cross_data(ctx_dft);
 
@@ -2994,6 +2999,11 @@ void common_speculative_draft_batch(
     const int n_ready = (int) ready.size();
 
     llama_set_dflash_n_slots(ctx_dft, n_ready);
+
+    // reset drafter state for each slot before block-mode draft
+    for (const auto & rs : ready) {
+        llama_memory_seq_rm(llama_get_memory(ctx_dft), rs.seq_id, -1, -1);
+    }
 
     const int64_t t1 = ggml_time_us();
 
