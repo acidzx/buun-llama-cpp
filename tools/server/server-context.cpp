@@ -973,12 +973,6 @@ private:
                 SRV_WRN("%s\n", "cache_reuse is not supported by multimodal, it will be disabled");
             }
 
-            if (params_base.speculative.type() != COMMON_SPECULATIVE_TYPE_NONE) {
-                params_base.speculative.set_type(COMMON_SPECULATIVE_TYPE_NONE);
-                params_base.speculative.model_dft  = nullptr;
-                model_dft.reset();
-                SRV_WRN("%s\n", "speculative decoding is not supported by multimodal, it will be disabled");
-            }
         }
 
         if (!llama_memory_can_shift(llama_get_memory(ctx_tgt))) {
@@ -1097,10 +1091,6 @@ private:
                     slot.spec_shared = spec.get();
                 }
                 if (slot.can_speculate()) {
-                    if (mctx) {
-                        SRV_ERR("%s\n", "speculative decoding is not supported with multimodal");
-                        return false;
-                    }
                     common_speculative_set_seq_id(slot.get_spec(), slot.id);
                     SLT_INF(slot, "%s", "speculative decoding context initialized\n");
                 }
@@ -2553,9 +2543,6 @@ private:
             const int n_draft_max = slot.get_n_draft_max();
             if (n_draft_max > 0) {
                 const int64_t t_draft_slot_start = ggml_time_us();
-                if (mctx) {
-                    GGML_ABORT("not supported by multimodal");
-                }
 
                 llama_tokens draft;
                 if (!batched_drafts[slot.id].empty()) {
