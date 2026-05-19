@@ -512,6 +512,14 @@ struct common_speculative_state_draft_mtp : public common_speculative_impl {
         auto * ctx_tgt = this->params.ctx_tgt;
         auto * ctx_dft = this->params.ctx_dft;
 
+        // truncate ctx_dft to the start of this batch — draft() may have advanced
+        // ctx_dft past these positions, and M-RoPE requires monotonic positions
+        for (llama_seq_id s = 0; s < (llama_seq_id) n_seq; ++s) {
+            if (i_batch_beg[s] >= 0) {
+                llama_memory_seq_rm(llama_get_memory(ctx_dft), s, batch_in.pos[i_batch_beg[s]], -1);
+            }
+        }
+
         const size_t row_bytes = (size_t) n_embd * sizeof(float);
 
         common_batch_clear(batch);
@@ -1704,8 +1712,15 @@ struct common_speculative_impl_dflash : public common_speculative_impl {
                     n_target_layers, ctx_window, n_embd);
         }
 
-        LOG_INF("dflash: block_size=%d, mask_token=%d, n_target_layers=%d, n_embd=%d\n",
-                block_size, mask_token_id, n_target_layers, n_embd);
+        {
+            std::string ids_str;
+            for (int i = 0; i < n_target_layers; ++i) {
+                if (i) ids_str += ", ";
+                ids_str += std::to_string(capture_layers[i]);
+            }
+            LOG_INF("dflash: block_size=%d, mask_token=%d, n_target_layers=%d, n_embd=%d, target_ids=[%s]\n",
+                    block_size, mask_token_id, n_target_layers, n_embd, ids_str.c_str());
+        }
     }
 
     ~common_speculative_impl_dflash() override {
@@ -1881,9 +1896,6 @@ struct common_speculative_impl_dflash : public common_speculative_impl {
 
             const int64_t t0 = ggml_time_us();
 
-            // reset drafter state before each block-mode draft
-            llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, -1, -1);
-
             int cross_len = build_cross_data(ctx_dft);
 
             const int64_t t1 = ggml_time_us();
@@ -1987,8 +1999,6 @@ struct common_speculative_impl_dflash : public common_speculative_impl {
         // run drafter forward pass (same as flat draft)
         // --- begin shared draft setup ---
         const int64_t t0 = ggml_time_us();
-
-        llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, -1, -1);
 
         int cross_len = build_cross_data(ctx_dft);
 
@@ -2636,7 +2646,9 @@ void common_speculative_draft(common_speculative * spec) {
 void common_speculative_accept(common_speculative * spec, llama_seq_id seq_id, uint16_t n_accepted) {
     common_speculative_impl * impl = spec->impl_last[seq_id];
 
-    GGML_ASSERT(impl);
+    if (!impl) {
+        return;
+    }
 
     // TODO: currently only the implementation that generated the draft is used to accept it
     //       however, some implementations (such as MTP) need to also "see" the accepted tokens
@@ -3000,11 +3012,6 @@ void common_speculative_draft_batch(
 
     llama_set_dflash_n_slots(ctx_dft, n_ready);
 
-    // reset drafter state for each slot before block-mode draft
-    for (const auto & rs : ready) {
-        llama_memory_seq_rm(llama_get_memory(ctx_dft), rs.seq_id, -1, -1);
-    }
-
     const int64_t t1 = ggml_time_us();
 
     llama_batch batch = llama_batch_init(n_ready * batch_len, 0, 1);
@@ -3103,6 +3110,20 @@ void common_speculative_update_logits(common_speculative * spec, llama_context *
             static_cast<common_speculative_impl_copyspec *>(impl.get())->update_logits(ctx, batch_tokens, n_accepted);
         } else if (impl->type == COMMON_SPECULATIVE_TYPE_RECYCLE) {
             static_cast<common_speculative_impl_recycle *>(impl.get())->update_logits(ctx, batch_tokens, n_accepted);
+        }
+    }
+}
+
+void common_speculative_rollback_dft(common_speculative * spec, llama_seq_id seq_id, llama_pos n_past, uint16_t n_accepted) {
+    if (spec == nullptr) {
+        return;
+    }
+    for (auto & impl : spec->impls) {
+        if (impl->type == COMMON_SPECULATIVE_TYPE_DRAFT_MTP) {
+            auto * mtp = static_cast<common_speculative_state_draft_mtp *>(impl.get());
+            auto * ctx_dft = mtp->params.ctx_dft;
+            llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, n_past, -1);
+            mtp->accept(seq_id, n_accepted);
         }
     }
 }

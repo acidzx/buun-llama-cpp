@@ -108,6 +108,8 @@ void common_speculative_draft_batch(
 void   common_speculative_update_logits(common_speculative * spec, llama_context * ctx, const llama_tokens & batch_tokens, int n_accepted);
 void   common_speculative_flush_prefill(common_speculative * spec);
 
+void   common_speculative_rollback_dft(common_speculative * spec, llama_seq_id seq_id, llama_pos n_past, uint16_t n_accepted);
+
 // fork: DFlash ring buffer state save/load
 size_t common_speculative_ring_state_size(const common_speculative * spec);
 void   common_speculative_ring_state_save(const common_speculative * spec, uint8_t * buf, size_t size);

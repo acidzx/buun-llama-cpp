@@ -1324,7 +1324,7 @@ void llama_context::dflash_ensure_recurrent_setup() {
             dflash_capture->tape_name_map["v_conv_predelta-" + il_str]        = {idx, DFLASH_TAPE_V};
             dflash_capture->tape_name_map["gate-" + il_str]                   = {idx, DFLASH_TAPE_GATE};
             dflash_capture->tape_name_map["beta-" + il_str]                   = {idx, DFLASH_TAPE_BETA};
-            dflash_capture->tape_name_map["qkv_mixed_pretranspose-" + il_str] = {idx, DFLASH_TAPE_QKV};
+            dflash_capture->tape_name_map["linear_attn_qkv_mixed-" + il_str] = {idx, DFLASH_TAPE_QKV};
         }
     }
     dflash_capture->tape_layers.resize(dflash_capture->recurrent_layer_ids.size());
@@ -1369,6 +1369,7 @@ void llama_context::allocate_tape_gpu(int n_slots, int max_tokens) {
     if (!dflash_capture) {
         return;
     }
+
     if (n_slots < 1) {
         n_slots = 1;
     }
@@ -1387,8 +1388,8 @@ void llama_context::allocate_tape_gpu(int n_slots, int max_tokens) {
         }
     }
 
-    // populate recurrent-layer metadata if the caller beat set_tape_recording() to it
     dflash_ensure_recurrent_setup();
+
     if (dflash_capture->recurrent_layer_ids.empty()) {
         return;
     }
@@ -1497,12 +1498,7 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
     // ensure any previous async replay is complete before launching a new one
     tape_replay_sync();
 
-    // GPU-resident tape path: data already on GPU from graph-embedded copies
-    dflash_tape_gpu * const gpu_tape = dflash_capture->active_tape();
-    const bool use_gpu_tape = (gpu_tape != nullptr &&
-                               n_accepted <= gpu_tape->max_tokens);
-
-    if (!use_gpu_tape && dflash_capture->tape_layers.empty()) {
+    if (dflash_capture->tape_layers.empty()) {
         return;
     }
 
@@ -1536,7 +1532,6 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
     }
 
     const uint32_t n_embd_s = hparams.n_embd_s();
-    const uint32_t n_embd_r = hparams.n_embd_r();
 
     // find a GPU backend for graph computation
     ggml_backend_t gpu_backend = nullptr;
@@ -1550,6 +1545,7 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
 
     if (!gpu_backend) {
         tape_replay_cpu(mem_recurrent, cell_idx, n_accepted);
+        tape_replay_conv(mem_recurrent, cell_idx, n_accepted, seq_id);
         return;
     }
 
@@ -1579,8 +1575,8 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
             }
         }
         if (has_host || multi_device) {
-            // TODO: per-device GPU replay — build separate graphs per device instead of full CPU fallback
             tape_replay_cpu(mem_recurrent, cell_idx, n_accepted);
+            tape_replay_conv(mem_recurrent, cell_idx, n_accepted, seq_id);
             return;
         }
     }
@@ -1597,7 +1593,6 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
 
         struct ggml_cgraph * graph = ggml_new_graph_custom(ctx, n_rec * 12, false);
 
-        // track Q tensors that need zeroing (only when NOT using GPU tape for k/v/g/b)
         struct replay_input {
             ggml_tensor * q;
             ggml_tensor * k;
@@ -1605,42 +1600,53 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
             ggml_tensor * g;
             ggml_tensor * b;
             size_t tape_li;
+            bool gpu_tape; // k/v/g/b are views into GPU tape (skip CPU upload)
         };
         std::vector<replay_input> inputs;
         inputs.reserve(n_rec);
 
+        // look up GPU tape for this seq_id (graph-embedded copies wrote k/v/g/b here)
+        dflash_tape_gpu * tgpu = nullptr;
+        if (seq_id >= 0 && seq_id < (int) dflash_capture->tapes.size()) {
+            tgpu = dflash_capture->tapes[seq_id].get();
+        }
+
         for (int li = 0; li < n_rec; ++li) {
             int il = rec_ids[li];
 
+            auto & tape = tape_layers[li];
+            if (tape.n_tokens <= 0 || n_accepted > tape.n_tokens) continue;
+
+            // find this layer in GPU tape (if available)
+            int gpu_li = -1;
+            if (tgpu) {
+                for (int i = 0; i < (int) tgpu->layer_ids.size(); ++i) {
+                    if (tgpu->layer_ids[i] == il) { gpu_li = i; break; }
+                }
+            }
+
             int64_t S, H_k, H_v;
+            ggml_tensor * k_in, * v_in, * g_in, * b_in;
+            bool use_gpu_tape = (gpu_li >= 0);
+
             if (use_gpu_tape) {
-                auto & tl = gpu_tape->layers[li];
+                auto & tl = tgpu->layers[gpu_li];
                 S   = tl.k->ne[0];
                 H_k = tl.k->ne[1];
                 H_v = tl.v->ne[1];
+                // views into GPU tape buffers — already populated by graph-embedded copies
+                k_in = ggml_view_3d(ctx, tl.k, S, H_k, (int64_t)n_accepted,
+                                    tl.k->nb[1], tl.k->nb[2], 0);
+                v_in = ggml_view_3d(ctx, tl.v, S, H_v, (int64_t)n_accepted,
+                                    tl.v->nb[1], tl.v->nb[2], 0);
+                g_in = ggml_view_3d(ctx, tl.gate, (int64_t)1, H_v, (int64_t)n_accepted,
+                                    tl.gate->nb[1], tl.gate->nb[2], 0);
+                b_in = ggml_view_3d(ctx, tl.beta, (int64_t)1, H_v, (int64_t)n_accepted,
+                                    tl.beta->nb[1], tl.beta->nb[2], 0);
             } else {
-                auto & tape = tape_layers[li];
-                if (tape.n_tokens <= 0 || n_accepted > tape.n_tokens) continue;
                 S   = tape.S_k;
                 H_k = tape.H_k;
                 H_v = tape.H_v;
-            }
-
-            ggml_tensor * k_in, * v_in, * g_in, * b_in;
-
-            if (use_gpu_tape) {
-                // create views into pre-filled GPU tape tensors (zero upload)
-                auto & tl = gpu_tape->layers[li];
-                k_in = ggml_view_4d(ctx, tl.k, S, H_k, (int64_t)n_accepted, (int64_t)1,
-                    tl.k->nb[1], tl.k->nb[2], tl.k->nb[2] * n_accepted, 0);
-                v_in = ggml_view_4d(ctx, tl.v, S, H_v, (int64_t)n_accepted, (int64_t)1,
-                    tl.v->nb[1], tl.v->nb[2], tl.v->nb[2] * n_accepted, 0);
-                g_in = ggml_view_4d(ctx, tl.gate, (int64_t)1, H_v, (int64_t)n_accepted, (int64_t)1,
-                    tl.gate->nb[1], tl.gate->nb[2], tl.gate->nb[2] * n_accepted, 0);
-                b_in = ggml_view_4d(ctx, tl.beta, (int64_t)1, H_v, (int64_t)n_accepted, (int64_t)1,
-                    tl.beta->nb[1], tl.beta->nb[2], tl.beta->nb[2] * n_accepted, 0);
-            } else {
-                // allocate new tensors (will be filled from CPU tape data)
                 k_in = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, S, H_k, (int64_t)n_accepted, (int64_t)1);
                 v_in = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, S, H_v, (int64_t)n_accepted, (int64_t)1);
                 g_in = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, (int64_t)1, H_v, (int64_t)n_accepted, (int64_t)1);
@@ -1681,7 +1687,7 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
             ggml_tensor * cpy = ggml_cpy(ctx, result_state, s_write);
             ggml_build_forward_expand(graph, cpy);
 
-            inputs.push_back({ q_in, k_in, v_in, g_in, b_in, (size_t)li });
+            inputs.push_back({ q_in, k_in, v_in, g_in, b_in, (size_t)li, use_gpu_tape });
         }
 
         if (inputs.empty()) {
@@ -1706,6 +1712,7 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
             LLAMA_LOG_WARN("%s: failed to allocate GPU buffer for tape replay, falling back to CPU\n", __func__);
             ggml_free(ctx);
             tape_replay_cpu(mem_recurrent, cell_idx, n_accepted);
+            tape_replay_conv(mem_recurrent, cell_idx, n_accepted, seq_id);
             return;
         }
 
@@ -1736,8 +1743,7 @@ void llama_context::tape_replay(llama_seq_id seq_id, int n_accepted) {
                 ggml_backend_tensor_set(inp.q, dflash_capture->replay_zeros.data(), 0, ggml_nbytes(inp.q));
             }
 
-            // K, V, gate, beta: only upload from CPU if not using GPU tape
-            if (!use_gpu_tape) {
+            if (!inp.gpu_tape) {
                 auto & tape = tape_layers[inp.tape_li];
                 const int64_t S   = tape.S_k;
                 const int64_t H_k = tape.H_k;

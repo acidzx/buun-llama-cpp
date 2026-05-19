@@ -280,7 +280,9 @@ int main(int argc, char ** argv) {
             continue;
         }
 
-        common_speculative_accept(spec, seq_id, ids.size() - 1);
+        if (n_draft > 0) {
+            common_speculative_accept(spec, seq_id, ids.size() - 1);
+        }
 
         // full acceptance: consume the draft and commit accepted tokens
         n_past    += ids.size() - 1;

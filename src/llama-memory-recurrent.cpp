@@ -520,12 +520,12 @@ bool llama_memory_recurrent::resize(uint32_t new_mem_size) {
         }
 
         if (old_r_l[i]) {
-            ggml_tensor * r = ggml_new_tensor_2d(ctx, old_r_l[i]->type, hparams.n_embd_r(), new_mem_size);
+            ggml_tensor * r = ggml_new_tensor_2d(ctx, old_r_l[i]->type, hparams.n_embd_r(), new_mem_size * (1 + n_rs_seq));
             ggml_format_name(r, "cache_r_l%d", i);
             r_l[i] = r;
         }
         if (old_s_l[i]) {
-            ggml_tensor * s = ggml_new_tensor_2d(ctx, old_s_l[i]->type, hparams.n_embd_s(), new_mem_size);
+            ggml_tensor * s = ggml_new_tensor_2d(ctx, old_s_l[i]->type, hparams.n_embd_s(), new_mem_size * (1 + n_rs_seq));
             ggml_format_name(s, "cache_s_l%d", i);
             s_l[i] = s;
         }
@@ -545,16 +545,17 @@ bool llama_memory_recurrent::resize(uint32_t new_mem_size) {
     }
 
     if (n_copy > 0) {
+        const uint32_t n_copy_rows = n_copy * (1 + n_rs_seq);
         std::vector<uint8_t> tmp;
         for (int i = 0; i < n_layer; i++) {
             if (old_r_l[i] && r_l[i]) {
-                size_t bytes = ggml_row_size(old_r_l[i]->type, hparams.n_embd_r()) * n_copy;
+                size_t bytes = ggml_row_size(old_r_l[i]->type, hparams.n_embd_r()) * n_copy_rows;
                 tmp.resize(bytes);
                 ggml_backend_tensor_get(old_r_l[i], tmp.data(), 0, bytes);
                 ggml_backend_tensor_set(r_l[i], tmp.data(), 0, bytes);
             }
             if (old_s_l[i] && s_l[i]) {
-                size_t bytes = ggml_row_size(old_s_l[i]->type, hparams.n_embd_s()) * n_copy;
+                size_t bytes = ggml_row_size(old_s_l[i]->type, hparams.n_embd_s()) * n_copy_rows;
                 tmp.resize(bytes);
                 ggml_backend_tensor_get(old_s_l[i], tmp.data(), 0, bytes);
                 ggml_backend_tensor_set(s_l[i], tmp.data(), 0, bytes);

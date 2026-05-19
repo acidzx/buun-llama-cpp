@@ -62,6 +62,7 @@ struct server_slot {
 
     // speculative decoding
     common_speculative_ptr spec;
+    common_speculative * spec_shared = nullptr; // non-owning
 
     llama_tokens spec_draft;
     llama_tokens spec_prompt;
@@ -248,12 +249,12 @@ struct server_slot {
 
     bool need_embd() const {
         GGML_ASSERT(task);
-        return task->need_embd() || (spec && common_speculative_need_embd(spec.get()));
+        return task->need_embd() || (get_spec() && common_speculative_need_embd(get_spec()));
     }
 
     bool need_embd_pre_norm() const {
         GGML_ASSERT(task);
-        return spec && common_speculative_need_embd_pre_norm(spec.get());
+        return get_spec() && common_speculative_need_embd_pre_norm(get_spec());
     }
 
     // if the context does not have a memory module then all embeddings have to be computed within a single ubatch
@@ -296,7 +297,11 @@ struct server_slot {
     }
 
     bool can_speculate() const {
-        return !!spec;
+        return spec || spec_shared;
+    }
+
+    common_speculative * get_spec() const {
+        return spec ? spec.get() : spec_shared;
     }
 
     void add_token(const completion_token_output & token) {
@@ -319,7 +324,7 @@ struct server_slot {
             return 0;
         }
 
-        const int n_draft_min = common_speculative_n_min(spec.get(), task->params.speculative);
+        const int n_draft_min = common_speculative_n_min(get_spec(), task->params.speculative);
 
 
         // determine the max draft that fits the current slot state
@@ -765,6 +770,12 @@ private:
             return;
         }
 
+        // DFlash np=1: backup is 1 cell (~1.5 MB). The shrink/expand cycle costs ~27ms
+        // of CUDA graph re-capture per request, far outweighing the memory savings.
+        if (params_base.speculative.type() == COMMON_SPECULATIVE_TYPE_DFLASH && n_parallel_user <= 2) {
+            return;
+        }
+
         for (const server_slot & slot : slots) {
             if (slot.is_processing() || slot.has_draft_backup) {
                 SRV_DBG("not shrinking recurrent state for prefill (%s): slot %d processing=%d has_backup=%d\n",
@@ -1082,12 +1093,15 @@ private:
 
             if (slot_can_spec) {
                 slot.spec.reset(common_speculative_init(params_base.speculative, slot.ctx_tgt, ctx_dft_shared.get()));
-                if (slot.spec) {
+                if (!slot.spec && spec) {
+                    slot.spec_shared = spec.get();
+                }
+                if (slot.can_speculate()) {
                     if (mctx) {
                         SRV_ERR("%s\n", "speculative decoding is not supported with multimodal");
                         return false;
                     }
-                    common_speculative_set_seq_id(slot.spec.get(), slot.id);
+                    common_speculative_set_seq_id(slot.get_spec(), slot.id);
                     SLT_INF(slot, "%s", "speculative decoding context initialized\n");
                 }
             }
@@ -1265,10 +1279,14 @@ private:
         // Must happen after init-time decodes (common_speculative_is_compat, warmup)
         // so the scheduler's CUDA graph state isn't stale.
         if (!recurrent_expanded && needs_reeval) {
-            auto * mem = llama_get_memory(ctx_tgt);
-            if (llama_memory_recurrent_shrink(mem, n_parallel_user)) {
-                SRV_INF("shrunk recurrent state to %d cells for prefill (deferred %d backup cells)\n",
-                        n_parallel_user, n_seq_max_full - n_parallel_user);
+            if (params_base.speculative.type() == COMMON_SPECULATIVE_TYPE_DFLASH && n_parallel_user <= 2) {
+                recurrent_expanded = true;
+            } else {
+                auto * mem = llama_get_memory(ctx_tgt);
+                if (llama_memory_recurrent_shrink(mem, n_parallel_user)) {
+                    SRV_INF("shrunk recurrent state to %d cells for prefill (deferred %d backup cells)\n",
+                            n_parallel_user, n_seq_max_full - n_parallel_user);
+                }
             }
         }
 
@@ -2500,7 +2518,7 @@ private:
 
                 for (auto & slot : slots) {
                     if (slot.state == SLOT_STATE_GENERATING && slot.can_speculate() && slot.get_n_draft_max() > 0) {
-                        batch_specs.push_back(slot.spec.get());
+                        batch_specs.push_back(slot.get_spec());
                         batch_id_lasts.push_back(slot.sampled);
                         batch_slot_ids.push_back(slot.id);
                     }
@@ -2545,7 +2563,7 @@ private:
                 } else {
                     const llama_tokens & cached_text_tokens = slot.prompt.tokens.get_text_tokens();
                     const auto & params_spec = slot.task->params.speculative;
-                    draft = common_speculative_draft(slot.spec.get(), params_spec, cached_text_tokens, slot.sampled);
+                    draft = common_speculative_draft(slot.get_spec(), params_spec, cached_text_tokens, slot.sampled);
                 }
 
                 if (draft.size() > (size_t) n_draft_max) {
@@ -2579,21 +2597,24 @@ private:
                             llama_set_tree_parent_ids(ctx_tgt, linear_parents.data(), n_batch_tokens);
                         }
 
-                        if (!recurrent_expanded) {
-                            auto * mem = llama_get_memory(ctx_tgt);
-                            if (llama_memory_recurrent_expand(mem, n_seq_max_full)) {
-                                SRV_INF("expanded recurrent state to %d cells for speculative backup\n", n_seq_max_full);
-                            } else {
-                                SRV_ERR("failed to expand recurrent state to %d cells\n", n_seq_max_full);
+                        // RS contexts handle rollback internally via seq_rm snapshots
+                        if (ctx_tgt_seq_rm_type != COMMON_CONTEXT_SEQ_RM_TYPE_RS) {
+                            if (!recurrent_expanded) {
+                                auto * mem = llama_get_memory(ctx_tgt);
+                                if (llama_memory_recurrent_expand(mem, n_seq_max_full)) {
+                                    SRV_INF("expanded recurrent state to %d cells for speculative backup\n", n_seq_max_full);
+                                } else {
+                                    SRV_ERR("failed to expand recurrent state to %d cells\n", n_seq_max_full);
+                                }
+                                recurrent_expanded = true;
                             }
-                            recurrent_expanded = true;
+                            const llama_seq_id seq_backup = slot.id + n_parallel_user;
+                            auto * mem = llama_get_memory(ctx_tgt);
+                            llama_memory_seq_rm(mem, seq_backup, -1, -1);
+                            llama_memory_seq_cp(mem, slot.id, seq_backup, -1, -1);
+                            slot.has_draft_backup = true;
+                            slot.seq_id_backup = seq_backup;
                         }
-                        const llama_seq_id seq_backup = slot.id + n_parallel_user;
-                        auto * mem = llama_get_memory(ctx_tgt);
-                        llama_memory_seq_rm(mem, seq_backup, -1, -1);
-                        llama_memory_seq_cp(mem, slot.id, seq_backup, -1, -1);
-                        slot.has_draft_backup = true;
-                        slot.seq_id_backup = seq_backup;
                     }
 
                     for (size_t i = 0; i < draft.size(); i++) {
@@ -2900,7 +2921,7 @@ private:
                                             n_past = std::min(slot.prompt.tokens.size_up_to_pos(pos_next), (size_t) it->n_tokens);
 
                                             if (slot.can_speculate() && !it->ring_data.empty()) {
-                                                common_speculative_ring_state_load(slot.spec.get(), it->ring_data.data(), it->ring_data.size());
+                                                common_speculative_ring_state_load(slot.get_spec(), it->ring_data.data(), it->ring_data.size());
                                             }
 
                                             SLT_WRN(slot, "restored context checkpoint (pos_min = %d, pos_max = %d, n_tokens = %" PRId64 ", n_past = %d, size = %.3f MiB)\n", it->pos_min, it->pos_max, it->n_tokens, n_past, (float) checkpoint_size / 1024 / 1024);
@@ -3167,10 +3188,10 @@ private:
 
                         // save DFlash ring buffer alongside the recurrent state checkpoint
                         if (slot.can_speculate()) {
-                            size_t ring_size = common_speculative_ring_state_size(slot.spec.get());
+                            size_t ring_size = common_speculative_ring_state_size(slot.get_spec());
                             if (ring_size > 0) {
                                 cur.ring_data.resize(ring_size);
-                                common_speculative_ring_state_save(slot.spec.get(), cur.ring_data.data(), ring_size);
+                                common_speculative_ring_state_save(slot.get_spec(), cur.ring_data.data(), ring_size);
                             }
                         }
 
@@ -3377,7 +3398,7 @@ private:
             // checkpoint-split prefill preserve all hidden states incrementally.
             for (auto & slot : slots) {
                 if ((slot.state == SLOT_STATE_PROCESSING_PROMPT || slot.state == SLOT_STATE_DONE_PROMPT) && slot.can_speculate()) {
-                    common_speculative_flush_prefill(slot.spec.get());
+                    common_speculative_flush_prefill(slot.get_spec());
                 }
             }
 
@@ -3441,7 +3462,7 @@ private:
                         if (params_base.speculative.type() == COMMON_SPECULATIVE_TYPE_DFLASH) {
                             llama_dflash_set_active_slot(ctx_tgt, slot.id);
                         }
-                        common_speculative_begin(slot.spec.get(), slot.prompt.tokens.get_text_tokens());
+                        common_speculative_begin(slot.get_spec(), slot.prompt.tokens.get_text_tokens());
                     }
                 } else if (slot.state != SLOT_STATE_GENERATING) {
                     continue; // continue loop of slots
@@ -3472,7 +3493,7 @@ private:
                         llama_dflash_set_active_slot(ctx_tgt, slot.id);
                     }
                     llama_tokens batch_tokens = { id };
-                    common_speculative_update_logits(slot.spec.get(), ctx_tgt, batch_tokens, 1);
+                    common_speculative_update_logits(slot.get_spec(), ctx_tgt, batch_tokens, 1);
                 }
 
                 // here we have synchronized the llama_context (due to the sampling above), so we can do time measurement
@@ -3533,7 +3554,7 @@ private:
                     llama_tokens batch_tokens;
                     batch_tokens.push_back(slot.sampled);
                     batch_tokens.insert(batch_tokens.end(), slot.spec_draft.begin(), slot.spec_draft.end());
-                    common_speculative_update_logits(slot.spec.get(), ctx_tgt, batch_tokens, (int) ids.size());
+                    common_speculative_update_logits(slot.get_spec(), ctx_tgt, batch_tokens, (int) ids.size());
                 }
 
                 slot.spec_i_batch.clear();
@@ -3596,6 +3617,8 @@ private:
                 } else {
                     llama_memory_seq_rm(llama_get_memory(ctx_tgt), slot.id, slot.prompt.n_tokens(), -1);
                 }
+
+                common_speculative_rollback_dft(slot.get_spec(), slot.id, slot.prompt.n_tokens(), (uint16_t)(ids.size() - 1));
 
                 for (size_t i = 0; i < ids.size(); ++i) {
                     completion_token_output result;
