@@ -504,20 +504,26 @@ struct server_slot {
         const double n_gen_second = 1e3 / t_token_generation * n_decoded;
 
         SLT_INF(*this,
-                "\n"
-                "prompt eval time = %10.2f ms / %5d tokens (%8.2f ms per token, %8.2f tokens per second)\n"
-                "       eval time = %10.2f ms / %5d tokens (%8.2f ms per token, %8.2f tokens per second)\n"
+                "prompt eval time = %10.2f ms / %5d tokens (%8.2f ms per token, %8.2f tokens per second)\n",
+                t_prompt_processing, n_prompt_tokens_processed, t_prompt, n_prompt_second);
+
+        SLT_INF(*this,
+                "       eval time = %10.2f ms / %5d tokens (%8.2f ms per token, %8.2f tokens per second)\n",
+                t_token_generation, n_decoded, t_gen, n_gen_second);
+
+        SLT_INF(*this,
                 "      total time = %10.2f ms / %5d tokens\n",
-                t_prompt_processing, n_prompt_tokens_processed, t_prompt, n_prompt_second,
-                t_token_generation, n_decoded, t_gen, n_gen_second,
                 t_prompt_processing + t_token_generation, n_prompt_tokens_processed + n_decoded);
+
+        SLT_INF(*this,
+                "   graphs reused = %10d\n",
+                llama_perf_context(ctx_tgt).n_reused);
 
         if (n_draft_total > 0) {
             const float draft_ratio = (float) n_draft_accepted / n_draft_total;
-            SLT_CNT(*this,
-                    "draft acceptance rate = %0.5f (%5d accepted / %5d generated)\n",
-                    draft_ratio, n_draft_accepted, n_draft_total
-            );
+            SLT_INF(*this,
+                    "draft acceptance = %0.5f (%5d accepted / %5d generated)\n",
+                    draft_ratio, n_draft_accepted, n_draft_total);
         }
 
         common_speculative_print_stats(spec.get());
@@ -537,6 +543,9 @@ struct server_slot {
 
         if (ptask) {
             res["id_task"] = ptask->id;
+            res["n_prompt_tokens"]           = (int32_t) prompt.tokens.size();
+            res["n_prompt_tokens_processed"] = n_prompt_tokens_processed;
+            res["n_prompt_tokens_cache"]     = n_prompt_tokens_cache;
             res["params"] = ptask->params.to_json(only_metrics);
             res["next_token"] = {
                 {
@@ -751,6 +760,10 @@ private:
     bool mmproj_is_on_gpu = false;
 
     void destroy() {
+        spec.reset();
+        ctx_dft.reset();
+        model_dft.reset();
+
         llama_init.reset();
 
         ctx_tgt = nullptr;
@@ -928,30 +941,62 @@ private:
 
         params_base = params;
 
-        // Recurrent state backup for speculative decoding:
-        // slot i backs up to seq_id = i + n_parallel_user.
-        // Init with full 2*n_parallel (needed for graph reservation), then shrink
-        // recurrent state to n_parallel to free ~599 MiB VRAM during prefill.
-        // Expanded back to 2*n_parallel before first speculative draft.
+        const std::string & mmproj_path = params_base.mmproj.path;
+        const bool has_mmproj = !mmproj_path.empty();
+
+        // measure mmproj memory for auto-fit (upstream #21489)
+        // skip when mmproj_gpu_swap: mmproj starts on CPU, swap path handles GPU margin separately
+        if (has_mmproj && params_base.fit_params && !params_base.mmproj_gpu_swap) {
+            auto mparams_measure = make_mmproj_params(params_base.mmproj_use_gpu);
+            auto mmproj_mem = mtmd_get_memory_usage(mmproj_path.c_str(), mparams_measure);
+            if (!mmproj_mem.empty()) {
+                size_t total = 0;
+                for (auto & [dev, size] : mmproj_mem) {
+                    total += size;
+                }
+                SRV_INF("[mtmd] estimated memory usage of mmproj is %.2f MiB\n", total / (1024.0 * 1024.0));
+                GGML_ASSERT(!params_base.fit_params_target.empty());
+                for (auto & [dev, size] : mmproj_mem) {
+                    for (size_t i = 0; i < ggml_backend_dev_count(); i++) {
+                        if (ggml_backend_dev_get(i) == dev) {
+                            if (i < params_base.fit_params_target.size()) {
+                                SRV_DBG("[mtmd] adding %.2f MiB to fit_params_target for device %s\n", size / (1024.0 * 1024.0), ggml_backend_dev_name(dev));
+                                params_base.fit_params_target[i] += size;
+                            }
+                            break;
+                        }
+                    }
+                }
+            } else {
+                SRV_ERR("%s", "[mtmd] failed to get memory usage of mmproj\n");
+            }
+        }
+
         n_parallel_user = params_base.n_parallel;
         recurrent_expanded = true;
 
-        // When mmproj GPU swap is active and context is auto-sized, run the fitter
-        // BEFORE doubling n_parallel. The doubled n_parallel inflates recurrent state
-        // estimates, causing the fitter to think even minimum context doesn't fit.
-        // Running with the real n_parallel lets it correctly size the context.
+        // When mmproj GPU swap is active, run fitter before n_parallel doubling.
+        // The doubled n_parallel inflates recurrent state estimates, causing the
+        // fitter to think even minimum context doesn't fit.
         const bool has_mtp = params_base.speculative.has_type(COMMON_SPECULATIVE_TYPE_DRAFT_MTP);
-        if (params_base.mmproj_gpu_swap && has_mtp
-                && !params_base.mmproj.path.empty()
+        if (params_base.mmproj_gpu_swap && has_mtp && has_mmproj
                 && params_base.fit_params && params_base.n_ctx == 0) {
-            std::error_code ec;
-            const auto fsize = std::filesystem::file_size(params_base.mmproj.path, ec);
-            if (!ec && fsize > 0) {
-                const size_t mmproj_gpu_estimate = fsize + 256ull * 1024 * 1024;
-                for (auto & margin : params_base.fit_params_target) {
-                    if (margin < mmproj_gpu_estimate) {
-                        margin = mmproj_gpu_estimate;
-                    }
+            auto mparams_gpu = make_mmproj_params(true);
+            auto mmproj_mem = mtmd_get_memory_usage(mmproj_path.c_str(), mparams_gpu);
+            size_t mmproj_gpu_estimate = 0;
+            for (auto & [dev, size] : mmproj_mem) {
+                mmproj_gpu_estimate += size;
+            }
+            if (mmproj_gpu_estimate == 0) {
+                std::error_code ec;
+                const auto fsize = std::filesystem::file_size(mmproj_path, ec);
+                if (!ec && fsize > 0) {
+                    mmproj_gpu_estimate = fsize + 256ull * 1024 * 1024;
+                }
+            }
+            for (auto & margin : params_base.fit_params_target) {
+                if (margin < mmproj_gpu_estimate) {
+                    margin = mmproj_gpu_estimate;
                 }
             }
 
@@ -980,11 +1025,6 @@ private:
             n_seq_max_full = params_base.n_parallel;
             recurrent_expanded = false;
 
-            // The n_parallel doubling is only for spec decode backup sequences.
-            // With unified KV, both sequences share the same KV cells (backup
-            // uses seq_id bitmask, no extra memory). Non-unified splits the KV
-            // cache into separate streams, halving per-slot context for no benefit
-            // when the extra sequences are just transient backups.
             if (!params_base.kv_unified && n_parallel_user == 1) {
                 params_base.kv_unified = true;
                 SRV_INF("%s", "auto-enabled kv-unified: spec decode backup doesn't need separate KV stream\n");
@@ -1096,8 +1136,11 @@ private:
             params_base.speculative.draft.ctx_dft = ctx_dft.get();
         }
 
-        const std::string & mmproj_path = params_base.mmproj.path;
-        if (!mmproj_path.empty()) {
+        if (has_mmproj) {
+            if (!is_resume) {
+                mtmd_helper_log_set(common_log_default_callback, nullptr);
+            }
+
             mmproj_gpu_swap = params_base.mmproj_gpu_swap && ctx_dft && !model_dft;
 
             const bool use_gpu = mmproj_gpu_swap ? false : params_base.mmproj_use_gpu;
@@ -3113,9 +3156,9 @@ private:
                             llama_pos pos_next = slot.prompt.tokens.pos_next(n_past);
 
                             // the largest pos_min required for a checkpoint to be useful
-                            const auto pos_min_thold = std::max(0, pos_next - n_swa);
+                            const auto pos_min_thold = std::max(0, pos_next - n_swa - 1);
 
-                            if (n_past > 0 && n_past < slot.prompt.n_tokens()) {
+                            if (n_past > 0 && n_past <= slot.prompt.n_tokens()) {
                                 const auto pos_min = llama_memory_seq_pos_min(llama_get_memory(ctx_tgt), slot.id);
                                 if (pos_min == -1) {
                                     SLT_ERR(slot, "n_past = %d, slot.prompt.tokens.size() = %d, seq_id = %d, pos_min = %d\n", n_past, (int) slot.prompt.tokens.size(), slot.id, pos_min);
