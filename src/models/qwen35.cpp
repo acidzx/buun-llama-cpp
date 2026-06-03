@@ -78,6 +78,11 @@ void llama_model_qwen35::load_arch_tensors(llama_model_loader & ml) {
             // Q/K normalization for attention layers
             layer.attn_q_norm = create_tensor(tn(LLM_TENSOR_ATTN_Q_NORM, "weight", il), { n_embd_head_k }, flags);
             layer.attn_k_norm = create_tensor(tn(LLM_TENSOR_ATTN_K_NORM, "weight", il), { n_embd_head_k }, flags);
+
+            layer.wq_act_scale = create_tensor(tn(LLM_TENSOR_ATTN_Q,   "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.wk_act_scale = create_tensor(tn(LLM_TENSOR_ATTN_K,   "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.wv_act_scale = create_tensor(tn(LLM_TENSOR_ATTN_V,   "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.wo_act_scale = create_tensor(tn(LLM_TENSOR_ATTN_OUT, "act_scale", il), { n_embd_head_k * n_head }, TENSOR_NOT_REQUIRED);
         } else {
             // Linear attention (gated delta net) specific tensors
             // Create tensors with calculated dimensions
@@ -90,11 +95,20 @@ void llama_model_qwen35::load_arch_tensors(llama_model_loader & ml) {
             layer.ssm_alpha      = create_tensor(tn(LLM_TENSOR_SSM_ALPHA,      "weight", il), { n_embd, n_v_heads }, flags);
             layer.ssm_norm       = create_tensor(tn(LLM_TENSOR_SSM_NORM,       "weight", il), { head_v_dim }, flags);
             layer.ssm_out        = create_tensor(tn(LLM_TENSOR_SSM_OUT,        "weight", il), { value_dim, n_embd }, flags);
+
+            layer.wqkv_act_scale      = create_tensor(tn(LLM_TENSOR_ATTN_QKV,  "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.wqkv_gate_act_scale = create_tensor(tn(LLM_TENSOR_ATTN_GATE, "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.ssm_beta_act_scale  = create_tensor(tn(LLM_TENSOR_SSM_BETA,  "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.ssm_alpha_act_scale = create_tensor(tn(LLM_TENSOR_SSM_ALPHA, "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+            layer.ssm_out_act_scale   = create_tensor(tn(LLM_TENSOR_SSM_OUT,   "act_scale", il), { value_dim }, TENSOR_NOT_REQUIRED);
         }
 
         layer.ffn_gate = create_tensor(tn(LLM_TENSOR_FFN_GATE, "weight", il), {n_embd,   n_ff}, flags);
         layer.ffn_down = create_tensor(tn(LLM_TENSOR_FFN_DOWN, "weight", il), {  n_ff, n_embd}, flags);
         layer.ffn_up   = create_tensor(tn(LLM_TENSOR_FFN_UP,   "weight", il), {n_embd,   n_ff}, flags);
+        layer.ffn_gate_act_scale = create_tensor(tn(LLM_TENSOR_FFN_GATE, "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
+        layer.ffn_down_act_scale = create_tensor(tn(LLM_TENSOR_FFN_DOWN, "act_scale", il), { n_ff },   TENSOR_NOT_REQUIRED);
+        layer.ffn_up_act_scale   = create_tensor(tn(LLM_TENSOR_FFN_UP,   "act_scale", il), { n_embd }, TENSOR_NOT_REQUIRED);
     };
 
     auto load_block_mtp = [&](int il) {
@@ -237,11 +251,11 @@ std::pair<ggml_tensor *, ggml_tensor *> llama_model_qwen35::graph::build_qkvz(
     const int64_t n_seqs       = ubatch.n_seqs;
     const int64_t n_seq_tokens = ubatch.n_seq_tokens;
 
-    ggml_tensor * qkv_mixed = build_lora_mm(model.layers[il].wqkv, input, model.layers[il].wqkv_s);
+    ggml_tensor * qkv_mixed = build_lora_mm(model.layers[il].wqkv, input, model.layers[il].wqkv_s, model.layers[il].wqkv_act_scale);
     qkv_mixed = ggml_reshape_3d(ctx0, qkv_mixed, qkv_mixed->ne[0], n_seq_tokens, n_seqs);
     cb(qkv_mixed, "linear_attn_qkv_mixed", il);
 
-    ggml_tensor * z = build_lora_mm(model.layers[il].wqkv_gate, input, model.layers[il].wqkv_gate_s);
+    ggml_tensor * z = build_lora_mm(model.layers[il].wqkv_gate, input, model.layers[il].wqkv_gate_s, model.layers[il].wqkv_gate_act_scale);
     cb(z, "z", il);
 
     return { qkv_mixed, z };
@@ -270,7 +284,7 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_attn(
     // Order: joint QG projection, QG split, Q norm, KV projection, K norm, RoPE, attention
 
     // Qwen3Next uses a single Q projection that outputs query + gate
-    ggml_tensor * Qcur_full = build_lora_mm(model.layers[il].wq, cur, model.layers[il].wq_s); // [ (n_embd_head * 2) * n_head, n_tokens ]
+    ggml_tensor * Qcur_full = build_lora_mm(model.layers[il].wq, cur, model.layers[il].wq_s, model.layers[il].wq_act_scale); // [ (n_embd_head * 2) * n_head, n_tokens ]
     cb(Qcur_full, "Qcur_full", il);
 
     ggml_tensor * Qcur = ggml_view_3d(ctx0, Qcur_full, n_embd_head, n_head, n_tokens,
@@ -282,10 +296,10 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_attn(
     Qcur = build_norm(Qcur, model.layers[il].attn_q_norm, nullptr, LLM_NORM_RMS, il);
     cb(Qcur, "Qcur_normed", il);
 
-    ggml_tensor * Kcur = build_lora_mm(model.layers[il].wk, cur, model.layers[il].wk_s);
+    ggml_tensor * Kcur = build_lora_mm(model.layers[il].wk, cur, model.layers[il].wk_s, model.layers[il].wk_act_scale);
     cb(Kcur, "Kcur", il);
 
-    ggml_tensor * Vcur = build_lora_mm(model.layers[il].wv, cur, model.layers[il].wv_s);
+    ggml_tensor * Vcur = build_lora_mm(model.layers[il].wv, cur, model.layers[il].wv_s, model.layers[il].wv_act_scale);
     cb(Vcur, "Vcur", il);
 
     // Apply K normalization
@@ -333,7 +347,7 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_attn(
     cur = ggml_mul(ctx0, cur, gate_sigmoid);
     cb(cur, "attn_gated", il);
 
-    cur = build_lora_mm(model.layers[il].wo, cur, model.layers[il].wo_s);
+    cur = build_lora_mm(model.layers[il].wo, cur, model.layers[il].wo_s, model.layers[il].wo_act_scale);
     cb(cur, "attn_output", il);
 
     return cur;
@@ -362,7 +376,7 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_attn_linear(
     ggml_tensor * qkv_mixed = qkvz.first;
     ggml_tensor * z         = qkvz.second;
 
-    ggml_tensor * beta = build_lora_mm(model.layers[il].ssm_beta, cur, model.layers[il].ssm_beta_s);
+    ggml_tensor * beta = build_lora_mm(model.layers[il].ssm_beta, cur, model.layers[il].ssm_beta_s, model.layers[il].ssm_beta_act_scale);
     beta = ggml_reshape_4d(ctx0, beta, 1, num_v_heads, n_seq_tokens, n_seqs);
     cb(beta, "beta", il);
 
@@ -370,7 +384,7 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_attn_linear(
     beta = ggml_sigmoid(ctx0, beta);
     cb(beta, "beta_sigmoid", il);
 
-    ggml_tensor * alpha = build_lora_mm(model.layers[il].ssm_alpha, cur, model.layers[il].ssm_alpha_s);
+    ggml_tensor * alpha = build_lora_mm(model.layers[il].ssm_alpha, cur, model.layers[il].ssm_alpha_s, model.layers[il].ssm_alpha_act_scale);
     alpha = ggml_reshape_3d(ctx0, alpha, num_v_heads, n_seq_tokens, n_seqs);
     cb(alpha, "alpha", il);
 
@@ -516,7 +530,7 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_attn_linear(
     cb(final_output, "final_output", il);
 
     // Output projection
-    cur = build_lora_mm(model.layers[il].ssm_out, final_output, model.layers[il].ssm_out_s);
+    cur = build_lora_mm(model.layers[il].ssm_out, final_output, model.layers[il].ssm_out_s, model.layers[il].ssm_out_act_scale);
     cb(cur, "linear_attn_out", il);
 
     // Reshape back to original dimensions
@@ -534,7 +548,10 @@ ggml_tensor * llama_model_qwen35::graph::build_layer_ffn(ggml_tensor * cur, cons
         model.layers[il].ffn_gate, NULL, model.layers[il].ffn_gate_s,
         model.layers[il].ffn_down, NULL, model.layers[il].ffn_down_s,
         NULL,
-        LLM_FFN_SILU, LLM_FFN_PAR, il);
+        LLM_FFN_SILU, LLM_FFN_PAR, il,
+        model.layers[il].ffn_up_act_scale,
+        model.layers[il].ffn_gate_act_scale,
+        model.layers[il].ffn_down_act_scale);
     cb(cur, "ffn_out", il);
 
     return cur;

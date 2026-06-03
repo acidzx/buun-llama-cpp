@@ -1097,7 +1097,12 @@ ggml_tensor * llm_graph_context::build_cvec(
 ggml_tensor * llm_graph_context::build_lora_mm(
           ggml_tensor * w,
           ggml_tensor * cur,
-          ggml_tensor * w_s) const {
+          ggml_tensor * w_s,
+          ggml_tensor * act_scale) const {
+    if (act_scale) {
+        cur = ggml_div(ctx0, cur, act_scale);
+    }
+
     ggml_tensor * res = ggml_mul_mat(ctx0, w, cur);
 
     for (const auto & lora : *loras) {
@@ -1280,8 +1285,11 @@ ggml_tensor * llm_graph_context::build_ffn(
          ggml_tensor * act_scales,
      llm_ffn_op_type   type_op,
    llm_ffn_gate_type   type_gate,
-                 int   il) const {
-    ggml_tensor * tmp = up ? build_lora_mm(up, cur) : cur;
+                 int   il,
+         ggml_tensor * up_act_scale,
+         ggml_tensor * gate_act_scale,
+         ggml_tensor * down_act_scale) const {
+    ggml_tensor * tmp = up ? build_lora_mm(up, cur, nullptr, up_act_scale) : cur;
     cb(tmp, "ffn_up", il);
 
     if (up_b) {
@@ -1298,12 +1306,12 @@ ggml_tensor * llm_graph_context::build_ffn(
         switch (type_gate) {
             case LLM_FFN_SEQ:
                 {
-                    cur = build_lora_mm(gate, tmp);
+                    cur = build_lora_mm(gate, tmp, nullptr, gate_act_scale);
                     cb(cur, "ffn_gate", il);
                 } break;
             case LLM_FFN_PAR:
                 {
-                    cur = build_lora_mm(gate, cur);
+                    cur = build_lora_mm(gate, cur, nullptr, gate_act_scale);
                     cb(cur, "ffn_gate", il);
                 } break;
         }
@@ -1407,7 +1415,7 @@ ggml_tensor * llm_graph_context::build_ffn(
     }
 
     if (down) {
-        cur = build_lora_mm(down, cur);
+        cur = build_lora_mm(down, cur, nullptr, down_act_scale);
         if (arch == LLM_ARCH_GLM4 || arch == LLM_ARCH_GLM4_MOE || arch == LLM_ARCH_JAIS2) {
             // GLM4, GLM4_MOE, and JAIS2 seem to have numerical issues with half-precision accumulators
             ggml_mul_mat_set_prec(cur, GGML_PREC_F32);
