@@ -146,7 +146,7 @@ void ggml_cuda_mul_mat_q(
                 GGML_ASSERT(ne12 == 1 && ne13 == 1 &&
                     "WQ3_TCQ MMQ path: batched src1 (ne12/ne13 > 1) not implemented");
                 ggml_cuda_wq3_tcq_rotate_quantize_q8_1_mmq(
-                    ctx, src1_d, (block_q8_1_mmq *) src1_q8_1.get(), ne10, ne11, ne10_padded, stream);
+                    src1_d, (block_q8_1_mmq *) src1_q8_1.get(), ne10, ne11, s11, stream);
             } else {
                 quantize_mmq_q8_1_cuda(src1_d, nullptr, src1_q8_1.get(), src0->type, ne10, s11, s12, s13, ne10_padded,
                                        ne11, ne12, ne13, stream);
