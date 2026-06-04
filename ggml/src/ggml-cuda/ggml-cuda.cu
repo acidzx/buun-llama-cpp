@@ -628,6 +628,7 @@ struct ggml_backend_cuda_buffer_context {
     int device;
     void * dev_ptr = nullptr;
     std::string name;
+    std::vector<ggml_cuda_wq3_tcq_decoded_cache *> wq3_tcq_decoded_caches;
 
     ggml_backend_cuda_buffer_context(int device, void * dev_ptr) :
         device(device), dev_ptr(dev_ptr),
@@ -635,6 +636,9 @@ struct ggml_backend_cuda_buffer_context {
     }
 
     ~ggml_backend_cuda_buffer_context() {
+        for (ggml_cuda_wq3_tcq_decoded_cache * cache : wq3_tcq_decoded_caches) {
+            ggml_cuda_wq3_tcq_decoded_cache_free(cache);
+        }
         CUDA_CHECK(cudaFree(dev_ptr));
     }
 };
@@ -2579,8 +2583,27 @@ static bool ggml_cuda_should_fuse_mul_mat_vec_wq3_tcq(const ggml_tensor * tensor
     return !split;
 }
 
-static const ggml_cuda_wq3_tcq_decoded_cache * ggml_cuda_wq3_tcq_get_decoded_cache(const ggml_tensor * tensor) {
-    return (const ggml_cuda_wq3_tcq_decoded_cache *) tensor->extra;
+static const ggml_cuda_wq3_tcq_decoded_cache * ggml_cuda_wq3_tcq_get_or_create_decoded_cache(const ggml_tensor * tensor, cudaStream_t stream) {
+    if (tensor->buffer == nullptr ||
+            !ggml_backend_buffer_is_cuda(tensor->buffer) ||
+            ggml_backend_buft_is_cuda_split(tensor->buffer->buft)) {
+        return nullptr;
+    }
+
+    if (tensor->extra != nullptr) {
+        return (const ggml_cuda_wq3_tcq_decoded_cache *) tensor->extra;
+    }
+
+    ggml_backend_cuda_buffer_context * buffer_ctx = (ggml_backend_cuda_buffer_context *) tensor->buffer->context;
+    ggml_cuda_wq3_tcq_decoded_cache * cache = ggml_cuda_wq3_tcq_decoded_cache_try_create(
+        tensor->name, tensor->data, ggml_nbytes(tensor), stream);
+    if (cache == nullptr) {
+        return nullptr;
+    }
+
+    const_cast<ggml_tensor *>(tensor)->extra = cache;
+    buffer_ctx->wq3_tcq_decoded_caches.push_back(cache);
+    return cache;
 }
 
 static void ggml_cuda_mul_mat(ggml_backend_cuda_context & ctx, const ggml_tensor * src0, const ggml_tensor * src1, ggml_tensor * dst) {
@@ -2673,7 +2696,7 @@ static void ggml_cuda_mul_mat(ggml_backend_cuda_context & ctx, const ggml_tensor
         ggml_cuda_wq3_tcq_mmvq_native(
             ctx.pool(),
             src0->data,
-            ggml_cuda_wq3_tcq_get_decoded_cache(src0),
+            ggml_cuda_wq3_tcq_get_or_create_decoded_cache(src0, ctx.stream()),
             (const float *) src1->data,
             (float *)       dst->data,
             (int) src0->ne[0],
@@ -4121,9 +4144,9 @@ static int ggml_cuda_try_fuse(ggml_backend_cuda_context * cuda_ctx, ggml_cgraph 
                 ggml_cuda_wq3_tcq_mmvq_fused_gate_up_glu(
                     cuda_ctx->pool(),
                     up_src0->data,
-                    ggml_cuda_wq3_tcq_get_decoded_cache(up_src0),
+                    ggml_cuda_wq3_tcq_get_or_create_decoded_cache(up_src0, cuda_ctx->stream()),
                     gate_src0->data,
-                    ggml_cuda_wq3_tcq_get_decoded_cache(gate_src0),
+                    ggml_cuda_wq3_tcq_get_or_create_decoded_cache(gate_src0, cuda_ctx->stream()),
                     (const float *) up->src[1]->data,
                     (const float *) gate->src[1]->data,
                     (float *) glu->data,
@@ -4162,9 +4185,9 @@ static int ggml_cuda_try_fuse(ggml_backend_cuda_context * cuda_ctx, ggml_cgraph 
                 ggml_cuda_wq3_tcq_mmvq_fused_gate_up_glu(
                     cuda_ctx->pool(),
                     up_src0->data,
-                    ggml_cuda_wq3_tcq_get_decoded_cache(up_src0),
+                    ggml_cuda_wq3_tcq_get_or_create_decoded_cache(up_src0, cuda_ctx->stream()),
                     gate_src0->data,
-                    ggml_cuda_wq3_tcq_get_decoded_cache(gate_src0),
+                    ggml_cuda_wq3_tcq_get_or_create_decoded_cache(gate_src0, cuda_ctx->stream()),
                     (const float *) up->src[1]->data,
                     (const float *) gate->src[1]->data,
                     (float *) glu->data,
@@ -4283,9 +4306,9 @@ static int ggml_cuda_try_fuse(ggml_backend_cuda_context * cuda_ctx, ggml_cgraph 
                 ggml_cuda_wq3_tcq_mmvq_fused_gate_up_glu(
                     cuda_ctx->pool(),
                     src0->data,
-                    ggml_cuda_wq3_tcq_get_decoded_cache(src0),
+                    ggml_cuda_wq3_tcq_get_or_create_decoded_cache(src0, cuda_ctx->stream()),
                     gate_src0->data,
-                    ggml_cuda_wq3_tcq_get_decoded_cache(gate_src0),
+                    ggml_cuda_wq3_tcq_get_or_create_decoded_cache(gate_src0, cuda_ctx->stream()),
                     (const float *) src1->data,
                     (const float *) src1->data,
                     (float *) glu->data,

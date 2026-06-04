@@ -179,10 +179,22 @@ static bool wq3_tcq_use_proc_u16_layout() {
     return use_u16;
 }
 
+static int wq3_tcq_cached_block_rows_override() {
+    static const int block_rows = []() {
+        const char * env = getenv("GGML_CUDA_WQ3_CACHE_BLOCK_ROWS");
+        if (env == nullptr || env[0] == '\0') {
+            return 0;
+        }
+        const int value = atoi(env);
+        return value == 2 || value == 4 || value == 8 || value == 16 || value == 32 || value == 64 ? value : 0;
+    }();
+    return block_rows;
+}
+
 struct block_wq3_tcq_i8_cache {
     uint16_t norm;
-    int8_t   qs[128];
     uint16_t pad;
+    int8_t   qs[128];
 };
 static_assert(sizeof(block_wq3_tcq_i8_cache) == 132, "unexpected WQ3 TCQ decoded cache block size");
 
@@ -209,9 +221,33 @@ static bool wq3_tcq_decoded_cache_enabled_for(const char * tensor_name) {
     const bool wants_ffn_gate = strstr(env, "ffn_gate") != nullptr || strstr(env, "gate") != nullptr;
     const bool wants_ffn_down = strstr(env, "ffn_down") != nullptr || strstr(env, "down") != nullptr;
 
-    return (wants_ffn_up   && strstr(tensor_name, "ffn_up")   != nullptr) ||
-           (wants_ffn_gate && strstr(tensor_name, "ffn_gate") != nullptr) ||
-           (wants_ffn_down && strstr(tensor_name, "ffn_down") != nullptr);
+    if ((wants_ffn_up   && strstr(tensor_name, "ffn_up")   != nullptr) ||
+        (wants_ffn_gate && strstr(tensor_name, "ffn_gate") != nullptr) ||
+        (wants_ffn_down && strstr(tensor_name, "ffn_down") != nullptr)) {
+        return true;
+    }
+
+    std::string token;
+    for (const char * p = env; ; ++p) {
+        const char c = *p;
+        if (c == ',' || c == ':' || c == ';' || c == ' ' || c == '\t' || c == '\0') {
+            const std::string exact_suffix = "." + token + ".weight";
+            if (!token.empty() &&
+                    token != "up" && token != "gate" && token != "down" &&
+                    token != "ffn_up" && token != "ffn_gate" && token != "ffn_down" &&
+                    strstr(tensor_name, exact_suffix.c_str()) != nullptr) {
+                return true;
+            }
+            token.clear();
+            if (c == '\0') {
+                break;
+            }
+        } else {
+            token.push_back(c);
+        }
+    }
+
+    return false;
 }
 
 static __global__ void k_wq3_tcq_build_decoded_i8_cache(
@@ -1183,16 +1219,8 @@ static __global__ void k_wq3_tcq_mmvq_q8_1_rowpair_cached(
         const float norm0 = __half2float(__ushort_as_half(blk0->norm)) * cb_scale;
         const float norm1 = __half2float(__ushort_as_half(blk1->norm)) * cb_scale;
 
-        const uint32_t cpack0 =
-            ((uint32_t)(uint8_t)blk0->qs[lane * 4 + 0] << 0)  |
-            ((uint32_t)(uint8_t)blk0->qs[lane * 4 + 1] << 8)  |
-            ((uint32_t)(uint8_t)blk0->qs[lane * 4 + 2] << 16) |
-            ((uint32_t)(uint8_t)blk0->qs[lane * 4 + 3] << 24);
-        const uint32_t cpack1 =
-            ((uint32_t)(uint8_t)blk1->qs[lane * 4 + 0] << 0)  |
-            ((uint32_t)(uint8_t)blk1->qs[lane * 4 + 1] << 8)  |
-            ((uint32_t)(uint8_t)blk1->qs[lane * 4 + 2] << 16) |
-            ((uint32_t)(uint8_t)blk1->qs[lane * 4 + 3] << 24);
+        const uint32_t cpack0 = *reinterpret_cast<const uint32_t *>(blk0->qs + lane * 4);
+        const uint32_t cpack1 = *reinterpret_cast<const uint32_t *>(blk1->qs + lane * 4);
 
         const int qx = *reinterpret_cast<const int *>(xblk->qs + lane * 4);
         const float xd = xblk->d4[lane >> 3];
@@ -1460,14 +1488,31 @@ static void wq3_tcq_mmvq_native_q8_1(
         const void * xrot_q8_1,
         float * dst,
         int ncols, int nrows, cudaStream_t stream) {
-    // One warp per output row; BLOCK_ROWS warps per CTA share a 1 KiB smem
-    // codebook copy. BR=8 for large nrows (FFN/Q/O, ≥ 2048), BR=4 otherwise,
-    // BR=1 fallback for odd nrows. Sweep on RTX 3090 confirmed BR=8 wins at
-    // the large shapes, BR=2/16 both regress.
+    // One warp per output row. The cached path is memory-pressure sensitive
+    // after cache-line-aligned int8 loads; A100 sweep prefers BR=2 for large
+    // matrices. Uncached/procedural paths keep the older BR=32/16/8/4 order.
     const bool use_proc = g_wq3_tcq_codebook_mode == WQ3_TCQ_CODEBOOK_PROC_MURMUR;
     const bool use_u16 = use_proc && wq3_tcq_use_proc_u16_layout();
+    int cache_block_rows = decoded_cache != nullptr && nrows >= 2048 ? wq3_tcq_cached_block_rows_override() : 0;
+    if (cache_block_rows != 0 && (nrows % cache_block_rows) != 0) {
+        cache_block_rows = 0;
+    }
 
-    if ((nrows & 31) == 0 && nrows >= 2048) {
+    if ((nrows & 1) == 0 && nrows >= 2048 && (cache_block_rows == 2 || (decoded_cache != nullptr && cache_block_rows == 0))) {
+        const int n_blocks = nrows / 2;
+        const dim3 block(32, 1);
+        if (decoded_cache != nullptr) {
+            k_wq3_tcq_mmvq_q8_1_rowpair_cached<2><<<n_blocks, block, 0, stream>>>(
+                decoded_cache->data, xrot_q8_1, dst, ncols, nrows);
+        }
+    } else if ((nrows & 63) == 0 && nrows >= 2048 && cache_block_rows == 64) {
+        const int n_blocks = nrows / 64;
+        const dim3 block(32, 32);
+        if (decoded_cache != nullptr) {
+            k_wq3_tcq_mmvq_q8_1_rowpair_cached<64><<<n_blocks, block, 0, stream>>>(
+                decoded_cache->data, xrot_q8_1, dst, ncols, nrows);
+        }
+    } else if ((nrows & 31) == 0 && nrows >= 2048 && (cache_block_rows == 0 || cache_block_rows == 32)) {
         const int n_blocks = nrows / 32;
         const dim3 block(32, 16);
         if (decoded_cache != nullptr) {
@@ -1485,7 +1530,7 @@ static void wq3_tcq_mmvq_native_q8_1(
             k_wq3_tcq_mmvq_q8_1_rowpair<32><<<n_blocks, block, 0, stream>>>(
                 vx, xrot_q8_1, dst, ncols, nrows);
         }
-    } else if ((nrows & 15) == 0 && nrows >= 2048) {
+    } else if ((nrows & 15) == 0 && nrows >= 2048 && (cache_block_rows == 0 || cache_block_rows == 16)) {
         const int n_blocks = nrows / 16;
         const dim3 block(32, 8);
         if (decoded_cache != nullptr) {
@@ -1503,7 +1548,7 @@ static void wq3_tcq_mmvq_native_q8_1(
             k_wq3_tcq_mmvq_q8_1_rowpair<16><<<n_blocks, block, 0, stream>>>(
                 vx, xrot_q8_1, dst, ncols, nrows);
         }
-    } else if ((nrows & 7) == 0 && nrows >= 2048) {
+    } else if ((nrows & 7) == 0 && nrows >= 2048 && (cache_block_rows == 0 || cache_block_rows == 8)) {
         const int n_blocks = nrows / 8;
         const dim3 block(32, 4);
         if (decoded_cache != nullptr) {
@@ -1521,7 +1566,7 @@ static void wq3_tcq_mmvq_native_q8_1(
             k_wq3_tcq_mmvq_q8_1_rowpair<8><<<n_blocks, block, 0, stream>>>(
                 vx, xrot_q8_1, dst, ncols, nrows);
         }
-    } else if ((nrows & 3) == 0) {
+    } else if ((nrows & 3) == 0 && (cache_block_rows == 0 || cache_block_rows == 4)) {
         const int n_blocks = nrows / 4;
         const dim3 block(32, 2);
         if (decoded_cache != nullptr) {
