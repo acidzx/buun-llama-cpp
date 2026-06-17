@@ -89,6 +89,36 @@
     { "name": "x64-windows-sycl-release", "inherits": [ "sycl-base", "release" ] },
     { "name": "x64-windows-sycl-release-f16", "inherits": [ "sycl-base", "release", "sycl_f16" ] },
 
+    {
+        "name": "cuda-ada-base",
+        "hidden": true,
+        "inherits": ["base"],
+        "cacheVariables": {
+            "GGML_CUDA": "ON",
+            "CMAKE_CUDA_ARCHITECTURES": "89-virtual",
+            "GGML_CUDA_FA_ALL_QUANTS": "ON"
+        }
+    },
+
+    {
+        "name": "cuda-multi-arch-base",
+        "hidden": true,
+        "inherits": ["base"],
+        "cacheVariables": {
+            "GGML_CUDA": "ON",
+            "CMAKE_CUDA_ARCHITECTURES": "80-virtual;86-virtual;89-virtual",
+            "GGML_CUDA_FA_ALL_QUANTS": "ON"
+        }
+    },
+
+    { "name": "cuda-ada-debug",    "inherits": [ "cuda-ada-base", "debug" ] },
+    { "name": "cuda-ada-release",  "inherits": [ "cuda-ada-base", "release" ] },
+    { "name": "cuda-ada-reldbg",   "inherits": [ "cuda-ada-base", "reldbg" ] },
+
+    { "name": "cuda-multi-arch-debug",    "inherits": [ "cuda-multi-arch-base", "debug" ] },
+    { "name": "cuda-multi-arch-release",  "inherits": [ "cuda-multi-arch-base", "release" ] },
+    { "name": "cuda-multi-arch-reldbg",   "inherits": [ "cuda-multi-arch-base", "reldbg" ] },
+
     { "name": "x64-windows-vulkan-debug", "inherits": [ "base", "vulkan", "debug" ] },
     { "name": "x64-windows-vulkan-release", "inherits": [ "base", "vulkan", "release" ] }
   ]

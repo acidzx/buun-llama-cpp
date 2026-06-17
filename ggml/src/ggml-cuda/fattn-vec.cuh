@@ -121,6 +121,7 @@ static __global__ void flash_attn_ext_vec(
     constexpr int smem_cb_size = is_tcq3 ? 512 : (is_tcq2 ? 256 : 0);
     __shared__ float smem_codebook[smem_cb_size > 0 ? smem_cb_size : 1];
     if constexpr (smem_cb_size > 0) {
+        (void)smem_codebook;
         const float * cb_src = is_tcq3 ? d_turbo3_tcq_codebook_fattn : d_turbo2_tcq_codebook_fattn;
         for (int i = tid; i < smem_cb_size; i += nthreads) {
             smem_codebook[i] = cb_src[i];

@@ -778,6 +778,8 @@ static __device__ __forceinline__ void flash_attn_ext_f16_iter(
     constexpr int stride_tile_V = V_is_K_view ? stride_tile_K : nbatch_V2 + 4;
 
     const int k_VKQ_0 = kb0 * nbatch_fa;
+
+    (void)stride_tile_Q;
 #if defined(TURING_MMA_AVAILABLE)
     T_C_KQ KQ_C[nbatch_fa/(np*(cols_per_warp == 8 ? T_C_KQ::I : T_C_KQ::J))];
 #elif defined(AMD_WMMA_AVAILABLE) || defined(AMD_MFMA_AVAILABLE)
@@ -811,6 +813,7 @@ static __device__ __forceinline__ void flash_attn_ext_f16_iter(
         const int k0_diff = k0_stop - k0_start;
 
         if constexpr (nstages <= 1) {
+            (void)k0_diff;
             if constexpr (!is_turbo_kv) {
                 constexpr bool use_cp_async = nstages == 1;
                 flash_attn_ext_f16_load_tile<stride_tile_K, nwarps, nbatch_fa, use_cp_async, oob_check>
@@ -1178,6 +1181,7 @@ static __device__ __forceinline__ void flash_attn_ext_f16_iter(
         const int i0_diff = i0_stop - i0_start;
 
         if constexpr (nstages <= 1) {
+            (void)i0_diff;
             if constexpr (!is_turbo_kv) {
                 if (!V_is_K_view || i0_stop > 2*nbatch_K2) {
                     constexpr bool use_cp_async = nstages == 1;
