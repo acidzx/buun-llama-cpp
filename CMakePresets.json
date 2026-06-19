@@ -4,7 +4,7 @@
     {
         "name":  "base",
         "hidden": true,
-        "generator":   "Ninja",
+        "generator":   "Visual Studio 17 2022",
         "binaryDir":   "${sourceDir}/build-${presetName}",
         "cacheVariables": {
             "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
@@ -118,6 +118,38 @@
     { "name": "cuda-multi-arch-debug",    "inherits": [ "cuda-multi-arch-base", "debug" ] },
     { "name": "cuda-multi-arch-release",  "inherits": [ "cuda-multi-arch-base", "release" ] },
     { "name": "cuda-multi-arch-reldbg",   "inherits": [ "cuda-multi-arch-base", "reldbg" ] },
+
+    {
+        "name": "cuda-ampere-nccl-base",
+        "hidden": true,
+        "inherits": ["base"],
+        "architecture": { "value": "x64", "strategy": "external" },
+        "toolset": { "value": "v143", "strategy": "external" },
+        "environment": {
+            "WindowsSdkDir": "C:\\Program Files (x86)\\Windows Kits\\10\\",
+            "WindowsSdkVersion": "10.0.26100.0",
+            "UniversalCRTSdkDir": "C:\\Program Files (x86)\\Windows Kits\\10\\",
+            "UCRTVersion": "10.0.26100.0",
+            "PATH": "C:\\Program Files (x86)\\Windows Kits\\10\\Bin\\10.0.26100.0\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\ACE;%(PATH)"
+        },
+        "cacheVariables": {
+            "CMAKE_C_COMPILER": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe",
+            "CMAKE_CXX_COMPILER": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe",
+            "CMAKE_CUDA_COMPILER": "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe",
+            "CMAKE_SYSTEM_VERSION": "10.0.26100.0",
+            "CMAKE_WINDOWS_SDK_VERSION": "10.0.26100.0",
+            "GGML_CUDA": "ON",
+            "CMAKE_CUDA_ARCHITECTURES": "86-virtual;89-virtual",
+            "GGML_CUDA_FA_ALL_QUANTS": "ON",
+            "GGML_CUDA_NCCL": "ON",
+            "NCCL_INCLUDE_DIR": "${sourceDir}/nccl-windows/include",
+            "NCCL_LIBRARY": "${sourceDir}/nccl-windows/nccl64_134.13.3.lib"
+        }
+    },
+
+    { "name": "cuda-ampere-nccl-debug",    "inherits": [ "cuda-ampere-nccl-base", "debug" ] },
+    { "name": "cuda-ampere-nccl-release",  "inherits": [ "cuda-ampere-nccl-base", "release" ] },
+    { "name": "cuda-ampere-nccl-reldbg",   "inherits": [ "cuda-ampere-nccl-base", "reldbg" ] },
 
     { "name": "x64-windows-vulkan-debug", "inherits": [ "base", "vulkan", "debug" ] },
     { "name": "x64-windows-vulkan-release", "inherits": [ "base", "vulkan", "release" ] }
