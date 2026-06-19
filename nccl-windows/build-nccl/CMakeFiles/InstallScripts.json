@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,4 @@
+// Microsoft Visual C++ resource file for NCCL CUDA 13.3
+//
+
+IDI_ICON ICON "nccl.ico"

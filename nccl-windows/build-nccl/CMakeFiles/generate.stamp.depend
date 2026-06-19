@@ -1,0 +1,20 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeCUDAInformation.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Compiler/NVIDIA-CUDA.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Compiler/NVIDIA.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows-Initialize.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows-NVIDIA-CUDA.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/WindowsPaths.cmake
+D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CMakeCUDACompiler.cmake
+D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CMakeRCCompiler.cmake
+D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CMakeSystem.cmake
+D:/AI/buun-llama-cpp/nccl-windows/windows/CMakeLists.txt

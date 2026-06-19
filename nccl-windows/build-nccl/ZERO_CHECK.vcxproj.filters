@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\AI\buun-llama-cpp\nccl-windows\build-nccl\CMakeFiles\a55b0b7c6faf2b994d26b3c6f21fa068\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{33E7A81A-A2F0-3FFE-AF0F-9E67885CA931}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

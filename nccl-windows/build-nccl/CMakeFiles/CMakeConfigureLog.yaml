@@ -1,0 +1,1647 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Windows - 10.0.26200 - AMD64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:53 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:163 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCUDACompilerId.cu.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeCUDACompilerId.cu.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:53 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:163 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CUDA compiler identification source file "CMakeCUDACompilerId.cu" succeeded.
+      Compiler: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/nvcc.exe 
+      Build flags: 
+      Id flags: --keep;--keep-dir;tmp -v
+      
+      The output was:
+      0
+      Versione di MSBuild 17.14.40+3e7442088 per .NET Framework
+      Compilazione avviata 19/06/2026 23:20:57.
+      
+      Progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" sul nodo 1 (destinazioni predefinite).
+      PrepareForBuild:
+        Creazione directory "Debug\\".
+        L'output strutturato ├¿ abilitato. La formattazione della diagnostica del compilatore rifletter├á la gerarchia degli errori. Per altri dettagli, vedere https://aka.ms/cpp/structured-output.
+        Creazione directory "Debug\\CompilerIdCUDA.tlog\\".
+      InitializeBuildStatus:
+        Creazione di "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild". ├ê stato specificato "AlwaysCreate".
+        Aggiornamento timestamp di "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".
+      AddCudaCompileDeps:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=3 /D_MBCS /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I. /FIcuda_runtime.h /c D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu 
+      Compilazione di "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1:2) dal progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1) sul nodo 1 (destinazioni: CudaBuildCore).
+      CudaBuildCore:
+        Compiling CUDA source file CMakeCUDACompilerId.cu...
+        Creazione directory "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug".
+        cmd.exe /C "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmp0b59c13c57b84806a3892ffbb3653b2c.cmd"
+        "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart hybrid -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu"
+        
+        D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart hybrid -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" 
+        #$ _NVVM_BRANCH_=nvvm
+        #$ _SPACE_= 
+        #$ _CUDART_=cudart
+        #$ CUDA_ROOT=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3
+        #$ _HERE_=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin
+        #$ _THERE_=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin
+        #$ _TARGET_SIZE_=
+        #$ _TARGET_DIR_=
+        #$ _TARGET_SIZE_=64
+        #$ _WIN_PLATFORM_=x64
+        #$ TOP=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/..
+        #$ CICC_PATH=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../nvvm/bin
+        #$ NVVMIR_LIBRARY_DIR=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../nvvm/libdevice
+        #$ PATH=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../nvvm/bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../lib;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64;;C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x86;;C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\ide;C:\\Program Files (x86)\\HTML Help Workshop;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64;C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;;C:\\Program Files\\Python311\\Scripts\\;C:\\Program Files\\Python311\\;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin;;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\;C:\\Program Files\\CMake\\bin;C:\\Program Files\\dotnet\\;\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin;C:\\Users\\Acidzx\\.local\\bin;C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Acidzx\\AppData\\Roaming\\npm;C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin;C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin;C:\\Users\\Acidzx\\.dotnet\\tools;C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts;C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin;;
+        #$ INCLUDES="-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"  
+        #$ SYSTEM_INCLUDES= 
+        #$ LIBRARIES=  "/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../lib/x64"
+        #$ CUDAFE_FLAGS=--sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"
+        #$ PTXAS_FLAGS=
+        CMakeCUDACompilerId.cu
+        #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res: [-D__CUDA_ARCH_LIST__=750 -nologo -E -TP -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=3 -D__CUDACC_VER_BUILD__=33 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=3 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res" > "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-6_CMakeCUDACompilerId.cpp4.ii" 
+        CMakeCUDACompilerId.cu
+        #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res
+        #$ cudafe++ --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --display_error_number --orig_src_file_name "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10" --m64 --parse_templates --gen_c_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-5_CMakeCUDACompilerId.module_id" --simt-only "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-6_CMakeCUDACompilerId.cpp4.ii" 
+        #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -E -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=3 -D__CUDACC_VER_BUILD__=33 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=3 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res" > "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-9_CMakeCUDACompilerId.cpp1.ii" 
+        CMakeCUDACompilerId.cu
+        #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res
+        #$ ""%CICC_PATH%\\cicc" --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --display_error_number --orig_src_file_name "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"  -arch compute_75 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin.c"  -g -O0 -tused --module_id_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-5_CMakeCUDACompilerId.module_id" --gen_c_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.c" --stub_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.gpu"  "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-9_CMakeCUDACompilerId.cpp1.ii" --simt-only -o "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx""
+        #$ ptxas -arch=sm_75 -m64 -g --dont-merge-basicblocks --return-at-end "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx"  -o "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-11_CMakeCUDACompilerId.sm_75.cubin" 
+        #$ fatbinary -64 --ident="D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --cmdline="-g --dont-merge-basicblocks --return-at-end " --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -g "--image3=kind=elf,sm=75,file=C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-11_CMakeCUDACompilerId.sm_75.cubin" "--image3=kind=ptx,sm=75,file=C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx" --embedded-fatbin="C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin.c" 
+        #$ erase C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin
+        #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -c -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"     -Zi "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" ]
+        #$ cl.exe @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res" -Fo"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CompilerIdCUDA/x64/Debug/CMakeCUDACompilerId.cu.obj" 
+        tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp
+        #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res
+      Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinazioni: CudaBuildCore) completata.
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"
+        CompilerIdCUDA.vcxproj -> D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.exe
+      PostBuildEvent:
+        echo CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe
+        :VCEnd
+        CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe
+      FinalizeBuildStatus:
+        Eliminazione del file "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild" in corso.
+        Aggiornamento timestamp di "Debug\\CompilerIdCUDA.tlog\\CompilerIdCUDA.lastbuildstate".
+      Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinazioni predefinite) completata.
+      
+      Compilazione completata.
+          Avvisi: 0
+          Errori: 0
+      
+      Tempo trascorso 00:00:02.05
+      
+      
+      Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "CompilerIdCUDA.exe"
+      
+      Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "CompilerIdCUDA.vcxproj"
+      
+      The CUDA compiler identification is NVIDIA, found in:
+        D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CompilerIdCUDA.exe
+      The host compiler identification is MSVC
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:37 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:103 (__resolve_linker_path)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:186 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "_CMAKE_TOOL_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "link"
+    candidate_directories:
+      - "C:/Program Files/Python311/Scripts/"
+      - "C:/Program Files/Python311/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/dotnet/"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/"
+      - "C:/Users/Acidzx/.local/bin/"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/"
+      - "C:/Users/Acidzx/.dotnet/tools/"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/"
+    searched_directories:
+      - "C:/Program Files/Python311/Scripts/link.com"
+      - "C:/Program Files/Python311/Scripts/link.exe"
+      - "C:/Program Files/Python311/Scripts/link"
+      - "C:/Program Files/Python311/link.com"
+      - "C:/Program Files/Python311/link.exe"
+      - "C:/Program Files/Python311/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/link"
+      - "C:/Windows/System32/link.com"
+      - "C:/Windows/System32/link.exe"
+      - "C:/Windows/System32/link"
+      - "C:/Windows/link.com"
+      - "C:/Windows/link.exe"
+      - "C:/Windows/link"
+      - "C:/Windows/System32/wbem/link.com"
+      - "C:/Windows/System32/wbem/link.exe"
+      - "C:/Windows/System32/wbem/link"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/link.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/link.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/link"
+      - "C:/Windows/System32/OpenSSH/link.com"
+      - "C:/Windows/System32/OpenSSH/link.exe"
+      - "C:/Windows/System32/OpenSSH/link"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/link.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/link.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/link"
+      - "C:/Program Files/nodejs/link.com"
+      - "C:/Program Files/nodejs/link.exe"
+      - "C:/Program Files/nodejs/link"
+      - "C:/Program Files/Git/cmd/link.com"
+      - "C:/Program Files/Git/cmd/link.exe"
+      - "C:/Program Files/Git/cmd/link"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/link.com"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/link.exe"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/link"
+      - "C:/Program Files/CMake/bin/link.com"
+      - "C:/Program Files/CMake/bin/link.exe"
+      - "C:/Program Files/CMake/bin/link"
+      - "C:/Program Files/dotnet/link.com"
+      - "C:/Program Files/dotnet/link.exe"
+      - "C:/Program Files/dotnet/link"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/link.com"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/link.exe"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/link"
+      - "C:/Users/Acidzx/.local/bin/link.com"
+      - "C:/Users/Acidzx/.local/bin/link.exe"
+      - "C:/Users/Acidzx/.local/bin/link"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/link"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/link"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/link.com"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/link.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/link"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/link"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/link.com"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/link.exe"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/link"
+      - "C:/Users/Acidzx/.dotnet/tools/link.com"
+      - "C:/Users/Acidzx/.dotnet/tools/link.exe"
+      - "C:/Users/Acidzx/.dotnet/tools/link"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/link.com"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/link.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/link"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/link"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:37 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:104 (__resolve_linker_path)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:186 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "_CMAKE_TOOL_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "lld-link"
+    candidate_directories:
+      - "C:/Program Files/Python311/Scripts/"
+      - "C:/Program Files/Python311/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/dotnet/"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/"
+      - "C:/Users/Acidzx/.local/bin/"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/"
+      - "C:/Users/Acidzx/.dotnet/tools/"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/"
+    searched_directories:
+      - "C:/Program Files/Python311/Scripts/lld-link.com"
+      - "C:/Program Files/Python311/Scripts/lld-link.exe"
+      - "C:/Program Files/Python311/Scripts/lld-link"
+      - "C:/Program Files/Python311/lld-link.com"
+      - "C:/Program Files/Python311/lld-link.exe"
+      - "C:/Program Files/Python311/lld-link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/lld-link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/lld-link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/lld-link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/lld-link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/lld-link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/lld-link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/lld-link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/lld-link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/lld-link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/lld-link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/lld-link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/lld-link"
+      - "C:/Windows/System32/lld-link.com"
+      - "C:/Windows/System32/lld-link.exe"
+      - "C:/Windows/System32/lld-link"
+      - "C:/Windows/lld-link.com"
+      - "C:/Windows/lld-link.exe"
+      - "C:/Windows/lld-link"
+      - "C:/Windows/System32/wbem/lld-link.com"
+      - "C:/Windows/System32/wbem/lld-link.exe"
+      - "C:/Windows/System32/wbem/lld-link"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link"
+      - "C:/Windows/System32/OpenSSH/lld-link.com"
+      - "C:/Windows/System32/OpenSSH/lld-link.exe"
+      - "C:/Windows/System32/OpenSSH/lld-link"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link"
+      - "C:/Program Files/nodejs/lld-link.com"
+      - "C:/Program Files/nodejs/lld-link.exe"
+      - "C:/Program Files/nodejs/lld-link"
+      - "C:/Program Files/Git/cmd/lld-link.com"
+      - "C:/Program Files/Git/cmd/lld-link.exe"
+      - "C:/Program Files/Git/cmd/lld-link"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/lld-link.com"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/lld-link.exe"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/lld-link"
+      - "C:/Program Files/CMake/bin/lld-link.com"
+      - "C:/Program Files/CMake/bin/lld-link.exe"
+      - "C:/Program Files/CMake/bin/lld-link"
+      - "C:/Program Files/dotnet/lld-link.com"
+      - "C:/Program Files/dotnet/lld-link.exe"
+      - "C:/Program Files/dotnet/lld-link"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/lld-link.com"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/lld-link.exe"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/lld-link"
+      - "C:/Users/Acidzx/.local/bin/lld-link.com"
+      - "C:/Users/Acidzx/.local/bin/lld-link.exe"
+      - "C:/Users/Acidzx/.local/bin/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/lld-link"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/lld-link"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/lld-link.com"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/lld-link.exe"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/lld-link"
+      - "C:/Users/Acidzx/.dotnet/tools/lld-link.com"
+      - "C:/Users/Acidzx/.dotnet/tools/lld-link.exe"
+      - "C:/Users/Acidzx/.dotnet/tools/lld-link"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/lld-link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/lld-link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/lld-link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/lld-link"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:186 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "link"
+    candidate_directories:
+      - "C:/Program Files/Python311/Scripts/"
+      - "C:/Program Files/Python311/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/dotnet/"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/"
+      - "C:/Users/Acidzx/.local/bin/"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/"
+      - "C:/Users/Acidzx/.dotnet/tools/"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/"
+    searched_directories:
+      - "C:/Program Files/Python311/Scripts/link.com"
+      - "C:/Program Files/Python311/Scripts/link.exe"
+      - "C:/Program Files/Python311/Scripts/link"
+      - "C:/Program Files/Python311/link.com"
+      - "C:/Program Files/Python311/link.exe"
+      - "C:/Program Files/Python311/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/link"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/link.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/link.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/link"
+      - "C:/Windows/System32/link.com"
+      - "C:/Windows/System32/link.exe"
+      - "C:/Windows/System32/link"
+      - "C:/Windows/link.com"
+      - "C:/Windows/link.exe"
+      - "C:/Windows/link"
+      - "C:/Windows/System32/wbem/link.com"
+      - "C:/Windows/System32/wbem/link.exe"
+      - "C:/Windows/System32/wbem/link"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/link.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/link.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/link"
+      - "C:/Windows/System32/OpenSSH/link.com"
+      - "C:/Windows/System32/OpenSSH/link.exe"
+      - "C:/Windows/System32/OpenSSH/link"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/link.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/link.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/link"
+      - "C:/Program Files/nodejs/link.com"
+      - "C:/Program Files/nodejs/link.exe"
+      - "C:/Program Files/nodejs/link"
+      - "C:/Program Files/Git/cmd/link.com"
+      - "C:/Program Files/Git/cmd/link.exe"
+      - "C:/Program Files/Git/cmd/link"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/link.com"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/link.exe"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/link"
+      - "C:/Program Files/CMake/bin/link.com"
+      - "C:/Program Files/CMake/bin/link.exe"
+      - "C:/Program Files/CMake/bin/link"
+      - "C:/Program Files/dotnet/link.com"
+      - "C:/Program Files/dotnet/link.exe"
+      - "C:/Program Files/dotnet/link"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/link.com"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/link.exe"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/link"
+      - "C:/Users/Acidzx/.local/bin/link.com"
+      - "C:/Users/Acidzx/.local/bin/link.exe"
+      - "C:/Users/Acidzx/.local/bin/link"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/link"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/link"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/link.com"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/link.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/link"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/link"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/link.com"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/link.exe"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/link"
+      - "C:/Users/Acidzx/.dotnet/tools/link.com"
+      - "C:/Users/Acidzx/.dotnet/tools/link.exe"
+      - "C:/Users/Acidzx/.dotnet/tools/link"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/link.com"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/link.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/link"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/link"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/link.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/link.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/link"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:186 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_MT"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "mt"
+    candidate_directories:
+      - "C:/Program Files/Python311/Scripts/"
+      - "C:/Program Files/Python311/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/dotnet/"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/"
+      - "C:/Users/Acidzx/.local/bin/"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/"
+      - "C:/Users/Acidzx/.dotnet/tools/"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/"
+    searched_directories:
+      - "C:/Program Files/Python311/Scripts/mt.com"
+      - "C:/Program Files/Python311/Scripts/mt.exe"
+      - "C:/Program Files/Python311/Scripts/mt"
+      - "C:/Program Files/Python311/mt.com"
+      - "C:/Program Files/Python311/mt.exe"
+      - "C:/Program Files/Python311/mt"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/mt.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/mt.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/mt"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/mt.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/mt.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/mt"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/mt.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/mt.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/mt"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/mt.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/mt.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/mt"
+      - "C:/Windows/System32/mt.com"
+      - "C:/Windows/System32/mt.exe"
+      - "C:/Windows/System32/mt"
+      - "C:/Windows/mt.com"
+      - "C:/Windows/mt.exe"
+      - "C:/Windows/mt"
+      - "C:/Windows/System32/wbem/mt.com"
+      - "C:/Windows/System32/wbem/mt.exe"
+      - "C:/Windows/System32/wbem/mt"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mt.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mt.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mt"
+      - "C:/Windows/System32/OpenSSH/mt.com"
+      - "C:/Windows/System32/OpenSSH/mt.exe"
+      - "C:/Windows/System32/OpenSSH/mt"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/mt.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/mt.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/mt"
+      - "C:/Program Files/nodejs/mt.com"
+      - "C:/Program Files/nodejs/mt.exe"
+      - "C:/Program Files/nodejs/mt"
+      - "C:/Program Files/Git/cmd/mt.com"
+      - "C:/Program Files/Git/cmd/mt.exe"
+      - "C:/Program Files/Git/cmd/mt"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/mt.com"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/mt.exe"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/mt"
+      - "C:/Program Files/CMake/bin/mt.com"
+      - "C:/Program Files/CMake/bin/mt.exe"
+      - "C:/Program Files/CMake/bin/mt"
+      - "C:/Program Files/dotnet/mt.com"
+      - "C:/Program Files/dotnet/mt.exe"
+      - "C:/Program Files/dotnet/mt"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/mt.com"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/mt.exe"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/mt"
+      - "C:/Users/Acidzx/.local/bin/mt.com"
+      - "C:/Users/Acidzx/.local/bin/mt.exe"
+      - "C:/Users/Acidzx/.local/bin/mt"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/mt"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/mt"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/mt"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/mt.com"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/mt.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/mt"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/mt"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/mt.com"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/mt.exe"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/mt"
+      - "C:/Users/Acidzx/.dotnet/tools/mt.com"
+      - "C:/Users/Acidzx/.dotnet/tools/mt.exe"
+      - "C:/Users/Acidzx/.dotnet/tools/mt"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/mt.com"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/mt.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/mt"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/mt"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/mt"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/mt.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/mt.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/mt"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:186 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "lib"
+    candidate_directories:
+      - "C:/Program Files/Python311/Scripts/"
+      - "C:/Program Files/Python311/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/dotnet/"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/"
+      - "C:/Users/Acidzx/.local/bin/"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/"
+      - "C:/Users/Acidzx/.dotnet/tools/"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/"
+    searched_directories:
+      - "C:/Program Files/Python311/Scripts/lib.com"
+      - "C:/Program Files/Python311/Scripts/lib.exe"
+      - "C:/Program Files/Python311/Scripts/lib"
+      - "C:/Program Files/Python311/lib.com"
+      - "C:/Program Files/Python311/lib.exe"
+      - "C:/Program Files/Python311/lib"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/lib.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/lib.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/lib"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/lib.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/lib.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/lib"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/lib.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/lib.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/lib"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/lib.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/lib.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/lib"
+      - "C:/Windows/System32/lib.com"
+      - "C:/Windows/System32/lib.exe"
+      - "C:/Windows/System32/lib"
+      - "C:/Windows/lib.com"
+      - "C:/Windows/lib.exe"
+      - "C:/Windows/lib"
+      - "C:/Windows/System32/wbem/lib.com"
+      - "C:/Windows/System32/wbem/lib.exe"
+      - "C:/Windows/System32/wbem/lib"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lib.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lib.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lib"
+      - "C:/Windows/System32/OpenSSH/lib.com"
+      - "C:/Windows/System32/OpenSSH/lib.exe"
+      - "C:/Windows/System32/OpenSSH/lib"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lib.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lib.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lib"
+      - "C:/Program Files/nodejs/lib.com"
+      - "C:/Program Files/nodejs/lib.exe"
+      - "C:/Program Files/nodejs/lib"
+      - "C:/Program Files/Git/cmd/lib.com"
+      - "C:/Program Files/Git/cmd/lib.exe"
+      - "C:/Program Files/Git/cmd/lib"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/lib.com"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/lib.exe"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/lib"
+      - "C:/Program Files/CMake/bin/lib.com"
+      - "C:/Program Files/CMake/bin/lib.exe"
+      - "C:/Program Files/CMake/bin/lib"
+      - "C:/Program Files/dotnet/lib.com"
+      - "C:/Program Files/dotnet/lib.exe"
+      - "C:/Program Files/dotnet/lib"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/lib.com"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/lib.exe"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/lib"
+      - "C:/Users/Acidzx/.local/bin/lib.com"
+      - "C:/Users/Acidzx/.local/bin/lib.exe"
+      - "C:/Users/Acidzx/.local/bin/lib"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/lib"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/lib"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/lib"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/lib.com"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/lib.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/lib"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/lib"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/lib.com"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/lib.exe"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/lib"
+      - "C:/Users/Acidzx/.dotnet/tools/lib.com"
+      - "C:/Users/Acidzx/.dotnet/tools/lib.exe"
+      - "C:/Users/Acidzx/.dotnet/tools/lib"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/lib.com"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/lib.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/lib"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/lib"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/lib"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/lib.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/lib.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/lib"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CMakeNVCCParseImplicitInfo.cmake:149 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:295 (cmake_nvcc_parse_implicit_info)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA nvcc implicit link information:
+        found 'PATH=' string: [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../nvvm/bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../lib;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64;;C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x86;;C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\ide;C:\\Program Files (x86)\\HTML Help Workshop;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64;C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;;C:\\Program Files\\Python311\\Scripts\\;C:\\Program Files\\Python311\\;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin;;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\;C:\\Program Files\\CMake\\bin;C:\\Program Files\\dotnet\\;\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin;C:\\Users\\Acidzx\\.local\\bin;C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Acidzx\\AppData\\Roaming\\npm;C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin;C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin;C:\\Users\\Acidzx\\.dotnet\\tools;C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts;C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin;;]
+        found 'LIBRARIES=' string: ["/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../lib/x64"]
+        found 'INCLUDES=' string: ["-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"  ]
+        found 'SYSTEM_INCLUDES=' string: []
+        considering line: [Versione di MSBuild 17.14.40+3e7442088 per .NET Framework]
+        considering line: [Compilazione avviata 19/06/2026 23:20:57.]
+        considering line: [Progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" sul nodo 1 (destinazioni predefinite).]
+        considering line: [PrepareForBuild:]
+        considering line: [  Creazione directory "Debug\\".]
+        considering line: [  L'output strutturato ├¿ abilitato. La formattazione della diagnostica del compilatore rifletter├á la gerarchia degli errori. Per altri dettagli, vedere https://aka.ms/cpp/structured-output.]
+        considering line: [  Creazione directory "Debug\\CompilerIdCUDA.tlog\\".]
+        considering line: [InitializeBuildStatus:]
+        considering line: [  Creazione di "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild". ├ê stato specificato "AlwaysCreate".]
+        considering line: [  Aggiornamento timestamp di "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".]
+        considering line: [AddCudaCompileDeps:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=3 /D_MBCS /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I. /FIcuda_runtime.h /c D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu ]
+        considering line: [Compilazione di "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1:2) dal progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1) sul nodo 1 (destinazioni: CudaBuildCore).]
+        considering line: [CudaBuildCore:]
+        considering line: [  Compiling CUDA source file CMakeCUDACompilerId.cu...]
+        considering line: [  Creazione directory "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug".]
+        considering line: [  cmd.exe /C "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmp0b59c13c57b84806a3892ffbb3653b2c.cmd"]
+        considering line: [  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart hybrid -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu"]
+        considering line: [  ]
+        considering line: [  D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart hybrid -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        considering line: [                                        CMakeCUDACompilerId.cu]
+        considering line: [  #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res: [-D__CUDA_ARCH_LIST__=750 -nologo -E -TP -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=3 -D__CUDACC_VER_BUILD__=33 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=3 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res" > "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res]
+        considering line: [  #$ cudafe++ --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --display_error_number --orig_src_file_name "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10" --m64 --parse_templates --gen_c_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-5_CMakeCUDACompilerId.module_id" --simt-only "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -E -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=3 -D__CUDACC_VER_BUILD__=33 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=3 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res" > "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-9_CMakeCUDACompilerId.cpp1.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res]
+        considering line: [  #$ ""%CICC_PATH%\\cicc" --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --display_error_number --orig_src_file_name "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"  -arch compute_75 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin.c"  -g -O0 -tused --module_id_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-5_CMakeCUDACompilerId.module_id" --gen_c_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.c" --stub_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.gpu"  "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-9_CMakeCUDACompilerId.cpp1.ii" --simt-only -o "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx""]
+        considering line: [  #$ ptxas -arch=sm_75 -m64 -g --dont-merge-basicblocks --return-at-end "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx"  -o "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-11_CMakeCUDACompilerId.sm_75.cubin" ]
+        considering line: [  #$ fatbinary -64 --ident="D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --cmdline="-g --dont-merge-basicblocks --return-at-end " --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -g "--image3=kind=elf,sm=75,file=C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-11_CMakeCUDACompilerId.sm_75.cubin" "--image3=kind=ptx,sm=75,file=C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx" --embedded-fatbin="C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin.c" ]
+        considering line: [  #$ erase C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin]
+        considering line: [  #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -c -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"     -Zi "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" ]]
+        considering line: [  #$ cl.exe @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res" -Fo"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CompilerIdCUDA/x64/Debug/CMakeCUDACompilerId.cu.obj" ]
+        considering line: [  tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp]
+        considering line: [  #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res]
+        considering line: [Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinazioni: CudaBuildCore) completata.]
+        considering line: [Link:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          extracted link line: [link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+        considering line: [  CompilerIdCUDA.vcxproj -> D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.exe]
+        considering line: [PostBuildEvent:]
+        considering line: [  echo CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe]
+        considering line: [  :VCEnd]
+        considering line: [  CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe]
+        considering line: [FinalizeBuildStatus:]
+        considering line: [  Eliminazione del file "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild" in corso.]
+        considering line: [  Aggiornamento timestamp di "Debug\\CompilerIdCUDA.tlog\\CompilerIdCUDA.lastbuildstate".]
+        considering line: [Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinazioni predefinite) completata.]
+        considering line: [Compilazione completata.]
+        considering line: [    Avvisi: 0]
+        considering line: [    Errori: 0]
+        considering line: [Tempo trascorso 00:00:02.05]
+        considering line: []
+      
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        link line: [cuda-fake-ld link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          arg [cuda-fake-ld] ==> ignore
+          arg [link.exe] ==> ignore
+          arg [/ERRORREPORT:QUEUE] ==> ignore
+          arg [/OUT:.\\CompilerIdCUDA.exe] ==> ignore
+          arg [/INCREMENTAL:NO] ==> ignore
+          arg [/NOLOGO] ==> ignore
+          arg [/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64] ==> dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64]
+          arg [cudart_static.lib] ==> lib [cudart_static.lib]
+          arg [/MANIFEST] ==> ignore
+          arg [/MANIFESTUAC:level='asInvoker' uiAccess='false'] ==> ignore
+          arg [/manifest:embed] ==> ignore
+          arg [/PDB:.\\CompilerIdCUDA.pdb] ==> ignore
+          arg [/SUBSYSTEM:CONSOLE] ==> ignore
+          arg [/TLBID:1] ==> ignore
+          arg [/DYNAMICBASE] ==> ignore
+          arg [/NXCOMPAT] ==> ignore
+          arg [/IMPLIB:.\\CompilerIdCUDA.lib] ==> ignore MSVC link option
+          arg [/MACHINE:X64] ==> ignore
+          arg [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj] ==> ignore
+        collapse library dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64] ==> [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/lib/x64]
+        implicit libs: [cudart_static.lib]
+        implicit objs: []
+        implicit dirs: [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/lib/x64]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CMakeNVCCParseImplicitInfo.cmake:178 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCUDACompiler.cmake:295 (cmake_nvcc_parse_implicit_info)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA nvcc include information:
+        found 'PATH=' string: [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../nvvm/bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../lib;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64;;C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x86;;C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\ide;C:\\Program Files (x86)\\HTML Help Workshop;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64;C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;;C:\\Program Files\\Python311\\Scripts\\;C:\\Program Files\\Python311\\;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin;;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\;C:\\Program Files\\CMake\\bin;C:\\Program Files\\dotnet\\;\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin;C:\\Users\\Acidzx\\.local\\bin;C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Acidzx\\AppData\\Roaming\\npm;C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin;C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin;C:\\Users\\Acidzx\\.dotnet\\tools;C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts;C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin;;]
+        found 'LIBRARIES=' string: ["/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../lib/x64"]
+        found 'INCLUDES=' string: ["-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"  ]
+        found 'SYSTEM_INCLUDES=' string: []
+        considering line: [Versione di MSBuild 17.14.40+3e7442088 per .NET Framework]
+        considering line: [Compilazione avviata 19/06/2026 23:20:57.]
+        considering line: [Progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" sul nodo 1 (destinazioni predefinite).]
+        considering line: [PrepareForBuild:]
+        considering line: [  Creazione directory "Debug\\".]
+        considering line: [  L'output strutturato ├¿ abilitato. La formattazione della diagnostica del compilatore rifletter├á la gerarchia degli errori. Per altri dettagli, vedere https://aka.ms/cpp/structured-output.]
+        considering line: [  Creazione directory "Debug\\CompilerIdCUDA.tlog\\".]
+        considering line: [InitializeBuildStatus:]
+        considering line: [  Creazione di "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild". ├ê stato specificato "AlwaysCreate".]
+        considering line: [  Aggiornamento timestamp di "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".]
+        considering line: [AddCudaCompileDeps:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=3 /D_MBCS /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I. /FIcuda_runtime.h /c D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu ]
+        considering line: [Compilazione di "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1:2) dal progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1) sul nodo 1 (destinazioni: CudaBuildCore).]
+        considering line: [CudaBuildCore:]
+        considering line: [  Compiling CUDA source file CMakeCUDACompilerId.cu...]
+        considering line: [  Creazione directory "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug".]
+        considering line: [  cmd.exe /C "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmp0b59c13c57b84806a3892ffbb3653b2c.cmd"]
+        considering line: [  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart hybrid -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu"]
+        considering line: [  ]
+        considering line: [  D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart hybrid -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        considering line: [                                        CMakeCUDACompilerId.cu]
+        considering line: [  #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res: [-D__CUDA_ARCH_LIST__=750 -nologo -E -TP -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=3 -D__CUDACC_VER_BUILD__=33 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=3 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res" > "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-8.res]
+        considering line: [  #$ cudafe++ --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --display_error_number --orig_src_file_name "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10" --m64 --parse_templates --gen_c_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-5_CMakeCUDACompilerId.module_id" --simt-only "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -E -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=3 -D__CUDACC_VER_BUILD__=33 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=3 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res" > "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-9_CMakeCUDACompilerId.cpp1.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-10.res]
+        considering line: [  #$ ""%CICC_PATH%\\cicc" --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --display_error_number --orig_src_file_name "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"  -arch compute_75 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin.c"  -g -O0 -tused --module_id_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-5_CMakeCUDACompilerId.module_id" --gen_c_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.c" --stub_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.gpu"  "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-9_CMakeCUDACompilerId.cpp1.ii" --simt-only -o "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx""]
+        considering line: [  #$ ptxas -arch=sm_75 -m64 -g --dont-merge-basicblocks --return-at-end "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx"  -o "C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-11_CMakeCUDACompilerId.sm_75.cubin" ]
+        considering line: [  #$ fatbinary -64 --ident="D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --cmdline="-g --dont-merge-basicblocks --return-at-end " --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -g "--image3=kind=elf,sm=75,file=C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-11_CMakeCUDACompilerId.sm_75.cubin" "--image3=kind=ptx,sm=75,file=C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.ptx" --embedded-fatbin="C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin.c" ]
+        considering line: [  #$ erase C:/Users/Acidzx/AppData/Local/Temp/tmpxft_00001b14_00000000-4_CMakeCUDACompilerId.fatbin]
+        considering line: [  #$ resource file C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -c -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin/../include/cccl"     -Zi "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" ]]
+        considering line: [  #$ cl.exe @"C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res" -Fo"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/4.3.3/CompilerIdCUDA/CompilerIdCUDA/x64/Debug/CMakeCUDACompilerId.cu.obj" ]
+        considering line: [  tmpxft_00001b14_00000000-7_CMakeCUDACompilerId.cudafe1.cpp]
+        considering line: [  #$ erase C:\\Users\\Acidzx\\AppData\\Local\\Temp/tmpxft_00001b14_00000000-12.res]
+        considering line: [Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinazioni: CudaBuildCore) completata.]
+        considering line: [Link:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          extracted link line: [link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+        considering line: [  CompilerIdCUDA.vcxproj -> D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.exe]
+        considering line: [PostBuildEvent:]
+        considering line: [  echo CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe]
+        considering line: [  :VCEnd]
+        considering line: [  CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe]
+        considering line: [FinalizeBuildStatus:]
+        considering line: [  Eliminazione del file "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild" in corso.]
+        considering line: [  Aggiornamento timestamp di "Debug\\CompilerIdCUDA.tlog\\CompilerIdCUDA.lastbuildstate".]
+        considering line: [Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinazioni predefinite) completata.]
+        considering line: [Compilazione completata.]
+        considering line: [    Avvisi: 0]
+        considering line: [    Errori: 0]
+        considering line: [Tempo trascorso 00:00:02.05]
+        considering line: []
+      
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        link line: [cuda-fake-ld link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          arg [cuda-fake-ld] ==> ignore
+          arg [link.exe] ==> ignore
+          arg [/ERRORREPORT:QUEUE] ==> ignore
+          arg [/OUT:.\\CompilerIdCUDA.exe] ==> ignore
+          arg [/INCREMENTAL:NO] ==> ignore
+          arg [/NOLOGO] ==> ignore
+          arg [/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64] ==> dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64]
+          arg [cudart_static.lib] ==> lib [cudart_static.lib]
+          arg [/MANIFEST] ==> ignore
+          arg [/MANIFESTUAC:level='asInvoker' uiAccess='false'] ==> ignore
+          arg [/manifest:embed] ==> ignore
+          arg [/PDB:.\\CompilerIdCUDA.pdb] ==> ignore
+          arg [/SUBSYSTEM:CONSOLE] ==> ignore
+          arg [/TLBID:1] ==> ignore
+          arg [/DYNAMICBASE] ==> ignore
+          arg [/NXCOMPAT] ==> ignore
+          arg [/IMPLIB:.\\CompilerIdCUDA.lib] ==> ignore MSVC link option
+          arg [/MACHINE:X64] ==> ignore
+          arg [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\4.3.3\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj] ==> ignore
+        collapse library dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64] ==> [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/lib/x64]
+        implicit libs: [cudart_static.lib]
+        implicit objs: []
+        implicit dirs: [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/lib/x64]
+        implicit fwks: []
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineRCCompiler.cmake:40 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows-MSVC.cmake:592 (enable_language)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows-NVIDIA-CUDA.cmake:115 (__windows_compiler_msvc_enable_rc)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeCUDAInformation.cmake:35 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_RC_COMPILER"
+    description: "RC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "rc"
+    candidate_directories:
+      - "C:/Program Files/Python311/Scripts/"
+      - "C:/Program Files/Python311/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/nodejs/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/dotnet/"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/"
+      - "C:/Users/Acidzx/.local/bin/"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/"
+      - "C:/Users/Acidzx/.dotnet/tools/"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/"
+      - "C:/Program Files/bin/"
+      - "C:/Program Files/sbin/"
+      - "C:/Program Files/"
+      - "C:/Program Files (x86)/bin/"
+      - "C:/Program Files (x86)/sbin/"
+      - "C:/Program Files (x86)/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/CMake/sbin/"
+      - "C:/Program Files/CMake/"
+      - "C:/Program Files/nccl/bin/"
+      - "C:/Program Files/nccl/sbin/"
+      - "C:/Program Files/nccl/"
+    searched_directories:
+      - "C:/Program Files/Python311/Scripts/rc.com"
+      - "C:/Program Files/Python311/Scripts/rc.exe"
+      - "C:/Program Files/Python311/Scripts/rc"
+      - "C:/Program Files/Python311/rc.com"
+      - "C:/Program Files/Python311/rc.exe"
+      - "C:/Program Files/Python311/rc"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/rc.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/rc.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/x64/rc"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/rc.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/rc.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3/bin/rc"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/rc.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/rc.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64/rc"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/rc.com"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/rc.exe"
+      - "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/rc"
+      - "C:/Windows/System32/rc.com"
+      - "C:/Windows/System32/rc.exe"
+      - "C:/Windows/System32/rc"
+      - "C:/Windows/rc.com"
+      - "C:/Windows/rc.exe"
+      - "C:/Windows/rc"
+      - "C:/Windows/System32/wbem/rc.com"
+      - "C:/Windows/System32/wbem/rc.exe"
+      - "C:/Windows/System32/wbem/rc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/rc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/rc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/rc"
+      - "C:/Windows/System32/OpenSSH/rc.com"
+      - "C:/Windows/System32/OpenSSH/rc.exe"
+      - "C:/Windows/System32/OpenSSH/rc"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/rc.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/rc.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/rc"
+      - "C:/Program Files/nodejs/rc.com"
+      - "C:/Program Files/nodejs/rc.exe"
+      - "C:/Program Files/nodejs/rc"
+      - "C:/Program Files/Git/cmd/rc.com"
+      - "C:/Program Files/Git/cmd/rc.exe"
+      - "C:/Program Files/Git/cmd/rc"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/rc.com"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/rc.exe"
+      - "C:/Program Files/NVIDIA Corporation/Nsight Compute 2026.2.0/rc"
+      - "C:/Program Files/CMake/bin/rc.com"
+      - "C:/Program Files/CMake/bin/rc.exe"
+      - "C:/Program Files/CMake/bin/rc"
+      - "C:/Program Files/dotnet/rc.com"
+      - "C:/Program Files/dotnet/rc.exe"
+      - "C:/Program Files/dotnet/rc"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/rc.com"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/rc.exe"
+      - "//?/C:/Users/Acidzx/AppData/Local/Atomic Chat/resources/bin/rc"
+      - "C:/Users/Acidzx/.local/bin/rc.com"
+      - "C:/Users/Acidzx/.local/bin/rc.exe"
+      - "C:/Users/Acidzx/.local/bin/rc"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/pnpm/bin/rc"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WindowsApps/rc"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/Programs/Microsoft VS Code/bin/rc"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/rc.com"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/rc.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/npm/rc"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/GitHubDesktop/bin/rc"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/rc.com"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/rc.exe"
+      - "C:/ProgramData/Acidzx/GitHubDesktop/bin/rc"
+      - "C:/Users/Acidzx/.dotnet/tools/rc.com"
+      - "C:/Users/Acidzx/.dotnet/tools/rc.exe"
+      - "C:/Users/Acidzx/.dotnet/tools/rc"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/rc.com"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/rc.exe"
+      - "C:/Users/Acidzx/AppData/Roaming/Python/Python311/Scripts/rc"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/ffmpeg/ffmpeg-8.1.1-full_build/bin/rc"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Links/rc"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/rc.com"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/rc.exe"
+      - "C:/Users/Acidzx/AppData/Local/Microsoft/WinGet/Packages/yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-N-124716-g054dffd133-win64-gpl/bin/rc"
+      - "C:/Program Files/bin/rc.com"
+      - "C:/Program Files/bin/rc.exe"
+      - "C:/Program Files/bin/rc"
+      - "C:/Program Files/sbin/rc.com"
+      - "C:/Program Files/sbin/rc.exe"
+      - "C:/Program Files/sbin/rc"
+      - "C:/Program Files/rc.com"
+      - "C:/Program Files/rc.exe"
+      - "C:/Program Files/rc"
+      - "C:/Program Files (x86)/bin/rc.com"
+      - "C:/Program Files (x86)/bin/rc.exe"
+      - "C:/Program Files (x86)/bin/rc"
+      - "C:/Program Files (x86)/sbin/rc.com"
+      - "C:/Program Files (x86)/sbin/rc.exe"
+      - "C:/Program Files (x86)/sbin/rc"
+      - "C:/Program Files (x86)/rc.com"
+      - "C:/Program Files (x86)/rc.exe"
+      - "C:/Program Files (x86)/rc"
+      - "C:/Program Files/CMake/bin/rc.com"
+      - "C:/Program Files/CMake/bin/rc.exe"
+      - "C:/Program Files/CMake/bin/rc"
+      - "C:/Program Files/CMake/sbin/rc.com"
+      - "C:/Program Files/CMake/sbin/rc.exe"
+      - "C:/Program Files/CMake/sbin/rc"
+      - "C:/Program Files/CMake/rc.com"
+      - "C:/Program Files/CMake/rc.exe"
+      - "C:/Program Files/CMake/rc"
+      - "C:/Program Files/nccl/bin/rc.com"
+      - "C:/Program Files/nccl/bin/rc.exe"
+      - "C:/Program Files/nccl/bin/rc"
+      - "C:/Program Files/nccl/sbin/rc.com"
+      - "C:/Program Files/nccl/sbin/rc.exe"
+      - "C:/Program Files/nccl/sbin/rc"
+      - "C:/Program Files/nccl/rc.com"
+      - "C:/Program Files/nccl/rc.exe"
+      - "C:/Program Files/nccl/rc"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Program Files\\Python311\\Scripts\\"
+        - "C:\\Program Files\\Python311\\"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin\\x64"
+        - "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.2\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2026.2.0\\"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files\\dotnet\\"
+        - "\\\\?\\C:\\Users\\Acidzx\\AppData\\Local\\Atomic Chat\\resources\\bin"
+        - "C:\\Users\\Acidzx\\.local\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\pnpm\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\npm"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\ProgramData\\Acidzx\\GitHubDesktop\\bin"
+        - "C:\\Users\\Acidzx\\.dotnet\\tools"
+        - "C:\\Users\\Acidzx\\AppData\\Roaming\\Python\\Python311\\Scripts"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\ffmpeg\\ffmpeg-8.1.1-full_build\\bin"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Links"
+        - "C:\\Users\\Acidzx\\AppData\\Local\\Microsoft\\WinGet\\Packages\\yt-dlp.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-N-124716-g054dffd133-win64-gpl\\bin"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files/nccl"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files/nccl"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CUDA compiler ABI info"
+    directories:
+      source: "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5"
+      binary: "D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5"
+    cmakeVariables:
+      CMAKE_CUDA_ARCHITECTURES: "75"
+      CMAKE_CUDA_FLAGS: "-D_WINDOWS -Xcompiler=\" /EHsc\""
+      CMAKE_CUDA_FLAGS_DEBUG: "-Xcompiler=\" -Zi -Ob0 -Od /RTC1\""
+      CMAKE_CUDA_RUNTIME_LIBRARY: "Static"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CUDA_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4ebcd.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Versione di MSBuild 17.14.40+3e7442088 per .NET Framework
+        Compilazione avviata 19/06/2026 23:21:00.
+        
+        Progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" sul nodo 1 (destinazioni predefinite).
+        PrepareForBuild:
+          L'output strutturato ├¿ abilitato. La formattazione della diagnostica del compilatore rifletter├á la gerarchia degli errori. Per altri dettagli, vedere https://aka.ms/cpp/structured-output.
+          Creazione directory "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\Debug\\".
+          Creazione directory "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\".
+        InitializeBuildStatus:
+          Creazione di "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\unsuccessfulbuild". ├ê stato specificato "AlwaysCreate".
+          Aggiornamento timestamp di "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\unsuccessfulbuild".
+        AddCudaCompileDeps:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=3 /D_WINDOWS /D_MBCS /DCMAKE_INTDIR="Debug" /D_MBCS /DCMAKE_INTDIR="Debug" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I. /FIcuda_runtime.h /c "C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu" 
+        Compilazione di "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (1:2) dal progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (1) sul nodo 1 (destinazioni: CudaBuildCore).
+        CudaBuildCore:
+          Compiling CUDA source file C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu...
+          cmd.exe /C "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmp7296a5ddbe9b4950aefef4f647116b4f.cmd"
+          "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"     --keep-dir cmTC_4ebcd\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart static -forward-unknown-to-host-compiler --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_4ebcd.dir\\Debug\\vc143.pdb" -o cmTC_4ebcd.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu"
+          
+          D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"     --keep-dir cmTC_4ebcd\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart static -forward-unknown-to-host-compiler --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_4ebcd.dir\\Debug\\vc143.pdb" -o cmTC_4ebcd.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu" 
+          cl : warning della riga di comando D9002 : l'opzione sconosciuta '-v' verr├á ignorata
+          CMakeCUDACompilerABI.cu
+          cl : warning della riga di comando D9002 : l'opzione sconosciuta '-v' verr├á ignorata
+          CMakeCUDACompilerABI.cu
+          CMakeCUDACompilerABI.cu
+          cl : warning della riga di comando D9002 : l'opzione sconosciuta '-v' verr├á ignorata
+          tmpxft_000042ac_00000000-7_CMakeCUDACompilerABI.cudafe1.cpp
+        C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': troncamento da 'int' a 'bool' [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]
+        Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazioni: CudaBuildCore) completata.
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\Debug\\cmTC_4ebcd.exe" /INCREMENTAL /ILK:"cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.ilk" /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudadevrt.lib cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5/Debug/cmTC_4ebcd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5/Debug/cmTC_4ebcd.lib" /MACHINE:X64  -v cmTC_4ebcd.dir\\Debug\\CMakeCUDACompilerABI.obj
+        LINK : warning LNK4044: opzione '/v' non riconosciuta; verr├á ignorata [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]
+          cmTC_4ebcd.vcxproj -> D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\Debug\\cmTC_4ebcd.exe
+        FinalizeBuildStatus:
+          Eliminazione del file "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\unsuccessfulbuild" in corso.
+          Aggiornamento timestamp di "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\cmTC_4ebcd.lastbuildstate".
+        Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazioni predefinite) completata.
+        
+        Compilazione completata.
+        
+        "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazione predefinita) (1) ->
+        "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazione: CudaBuildCore) (1:2) ->
+        (destinazione: CudaBuildCore) -> 
+          C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': troncamento da 'int' a 'bool' [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]
+        
+        
+        "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazione predefinita) (1) ->
+        (destinazione: Link) -> 
+          LINK : warning LNK4044: opzione '/v' non riconosciuta; verr├á ignorata [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]
+        
+            Avvisi: 2
+            Errori: 0
+        
+        Tempo trascorso 00:00:01.79
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA implicit include dir info: rv=start
+        warn: unable to parse implicit include dirs!
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        ignore line: [Change Dir: 'D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5']
+        ignore line: []
+        ignore line: [Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4ebcd.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n]
+        ignore line: [Versione di MSBuild 17.14.40+3e7442088 per .NET Framework]
+        ignore line: [Compilazione avviata 19/06/2026 23:21:00.]
+        ignore line: []
+        ignore line: [Progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" sul nodo 1 (destinazioni predefinite).]
+        ignore line: [PrepareForBuild:]
+        ignore line: [  L'output strutturato ├¿ abilitato. La formattazione della diagnostica del compilatore rifletter├á la gerarchia degli errori. Per altri dettagli  vedere https://aka.ms/cpp/structured-output.]
+        ignore line: [  Creazione directory "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\Debug\\".]
+        ignore line: [  Creazione directory "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\".]
+        ignore line: [InitializeBuildStatus:]
+        ignore line: [  Creazione di "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\unsuccessfulbuild". ├ê stato specificato "AlwaysCreate".]
+        ignore line: [  Aggiornamento timestamp di "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\unsuccessfulbuild".]
+        ignore line: [AddCudaCompileDeps:]
+        ignore line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=3 /D_WINDOWS /D_MBCS /DCMAKE_INTDIR="Debug" /D_MBCS /DCMAKE_INTDIR="Debug" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include" /I. /FIcuda_runtime.h /c "C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu" ]
+        ignore line: [Compilazione di "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (1:2) dal progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (1) sul nodo 1 (destinazioni: CudaBuildCore).]
+        ignore line: [CudaBuildCore:]
+        ignore line: [  Compiling CUDA source file C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu...]
+        ignore line: [  cmd.exe /C "C:\\Users\\Acidzx\\AppData\\Local\\Temp\\tmp7296a5ddbe9b4950aefef4f647116b4f.cmd"]
+        ignore line: [  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"     --keep-dir cmTC_4ebcd\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart static -forward-unknown-to-host-compiler --generate-code=arch=compute_75 code=[compute_75 sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_4ebcd.dir\\Debug\\vc143.pdb" -o cmTC_4ebcd.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu"]
+        ignore line: [  ]
+        ignore line: [  D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\include"     --keep-dir cmTC_4ebcd\\x64\\Debug  -maxrregcount=0     --machine 64 --compile -cudart static -forward-unknown-to-host-compiler --generate-code=arch=compute_75 code=[compute_75 sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_4ebcd.dir\\Debug\\vc143.pdb" -o cmTC_4ebcd.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCUDACompilerABI.cu" ]
+        ignore line: [  cl : warning della riga di comando D9002 : l'opzione sconosciuta '-v' verr├á ignorata]
+        ignore line: [  CMakeCUDACompilerABI.cu]
+        ignore line: [  cl : warning della riga di comando D9002 : l'opzione sconosciuta '-v' verr├á ignorata]
+        ignore line: [  CMakeCUDACompilerABI.cu]
+        ignore line: [  CMakeCUDACompilerABI.cu]
+        ignore line: [  cl : warning della riga di comando D9002 : l'opzione sconosciuta '-v' verr├á ignorata]
+        ignore line: [  tmpxft_000042ac_00000000-7_CMakeCUDACompilerABI.cudafe1.cpp]
+        ignore line: [C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': troncamento da 'int' a 'bool' [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]]
+        ignore line: [Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazioni: CudaBuildCore) completata.]
+        ignore line: [Link:]
+        ignore line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\Debug\\cmTC_4ebcd.exe" /INCREMENTAL /ILK:"cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.ilk" /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.3\\lib\\x64" cudadevrt.lib cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5/Debug/cmTC_4ebcd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"D:/AI/buun-llama-cpp/nccl-windows/build-nccl/CMakeFiles/CMakeScratch/TryCompile-fm44y5/Debug/cmTC_4ebcd.lib" /MACHINE:X64  -v cmTC_4ebcd.dir\\Debug\\CMakeCUDACompilerABI.obj]
+        ignore line: [LINK : warning LNK4044: opzione '/v' non riconosciuta]
+        ignore line: [ verr├á ignorata [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]]
+        ignore line: [  cmTC_4ebcd.vcxproj -> D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\Debug\\cmTC_4ebcd.exe]
+        ignore line: [FinalizeBuildStatus:]
+        ignore line: [  Eliminazione del file "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\unsuccessfulbuild" in corso.]
+        ignore line: [  Aggiornamento timestamp di "cmTC_4ebcd.dir\\Debug\\cmTC_4ebcd.tlog\\cmTC_4ebcd.lastbuildstate".]
+        ignore line: [Compilazione progetto "D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazioni predefinite) completata.]
+        ignore line: []
+        ignore line: [Compilazione completata.]
+        ignore line: []
+        ignore line: ["D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazione predefinita) (1) ->]
+        ignore line: ["D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazione: CudaBuildCore) (1:2) ->]
+        ignore line: [(destinazione: CudaBuildCore) -> ]
+        ignore line: [  C:\\Program Files\\CMake\\share\\cmake-4.3\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': troncamento da 'int' a 'bool' [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]]
+        ignore line: []
+        ignore line: []
+        ignore line: ["D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj" (destinazione predefinita) (1) ->]
+        ignore line: [(destinazione: Link) -> ]
+        ignore line: [  LINK : warning LNK4044: opzione '/v' non riconosciuta]
+        ignore line: [ verr├á ignorata [D:\\AI\\buun-llama-cpp\\nccl-windows\\build-nccl\\CMakeFiles\\CMakeScratch\\TryCompile-fm44y5\\cmTC_4ebcd.vcxproj]]
+        ignore line: []
+        ignore line: [    Avvisi: 2]
+        ignore line: [    Errori: 0]
+        ignore line: []
+        ignore line: [Tempo trascorso 00:00:01.79]
+        ignore line: []
+        ignore line: []
+        linker tool for 'CUDA': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CUDA compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35227.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+...

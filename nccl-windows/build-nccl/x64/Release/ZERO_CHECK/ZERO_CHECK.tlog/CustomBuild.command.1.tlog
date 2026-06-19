@@ -1,0 +1,10 @@
+^D:\AI\BUUN-LLAMA-CPP\NCCL-WINDOWS\BUILD-NCCL\CMAKEFILES\A55B0B7C6FAF2B994D26B3C6F21FA068\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/AI/buun-llama-cpp/nccl-windows/windows -BD:/AI/buun-llama-cpp/nccl-windows/build-nccl --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/AI/buun-llama-cpp/nccl-windows/build-nccl/nccl.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
